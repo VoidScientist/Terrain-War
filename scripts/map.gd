@@ -23,31 +23,30 @@ var current: int = 0
 var ignore := [-1, 3]
 
 
-func _ready():
+func _ready() -> void:
 	map = get_used_rect()
 
 	flood_fill = FloodFill.new(map, self, 1-current, current)
 	
-	check_isolated_area(true)
-	
 	tile_set.tile_set_modulate(0, player_1_col)
 	tile_set.tile_set_modulate(1, player_2_col)
 	
-	fill_void()
-	
 	$UI.visible = true
+	
+	check_isolated_area(true)
+	setup_map()
 	set_camera_up()
 	update_ui()
 
 
-func _physics_process(delta):
+func _physics_process(delta) -> void:
 	mouse_pos = get_global_mouse_position()
 	
 	var cell_claimable = is_cell_empty(mouse_pos) and ally_cell_adj(mouse_pos, current)
 	
 	if Input.is_action_just_pressed("claim") and cell_claimable:
 		
-		if not claim_cell(mouse_pos, current): return
+		claim_cell(mouse_pos, current)
 		
 		score[players[current]] += 1
 
@@ -58,26 +57,26 @@ func _physics_process(delta):
 		update_ui()
 
 
-func swap_turn():
-	current = (current+1)%2
-	flood_fill.change_ids(1-current,current)
+func swap_turn() -> void:
+	current = (current + 1) % 2
+	flood_fill.change_ids(1 - current, current)
 	
 	
-func fill_void():
+func setup_map() -> void:
 	for x in range(map.size.x):
 		
 		for y in range(map.size.y):
 			
-			if get_cell(x, y) == -1:
-				
-				max_score += 1
+			if get_cell(x, y) != -1: continue
+			
+			max_score += 1
 
 
-func highlight_clickable_cells():
+func highlight_clickable_cells() -> void:
 	tile_set.tile_set_modulate(3, player_colors[current])
 
 
-func update_ui():
+func update_ui() -> void:
 	clean_available()
 	show_available_position()
 	VisualServer.set_default_clear_color(player_colors[current])
@@ -92,7 +91,7 @@ func update_ui():
 	score_bar.update()
 
 
-func set_camera_up():
+func set_camera_up() -> void:
 	var pix_size = get_used_rect().size
 	var size = max((pix_size.y * cell_size.y) / get_viewport().get_visible_rect().size.y, 
 				  (pix_size.x * cell_size.x) / get_viewport().get_visible_rect().size.x)
@@ -101,17 +100,16 @@ func set_camera_up():
 	camera.position.y = map.get_center().y * cell_size.y
 
 
-func claim_cell(mouse_pos, cell):
+func claim_cell(mouse_pos, cell) -> void:
 	var target_cell = world_to_map(mouse_pos)
 	set_cell(target_cell.x, target_cell.y, cell)
-	return true
 	
 	
-func is_cell_empty(mouse_pos):
+func is_cell_empty(mouse_pos) -> bool:
 	return get_cellv(world_to_map(mouse_pos)) in ignore
 
 
-func ally_cell_adj(mouse_pos, turn):
+func ally_cell_adj(mouse_pos, turn) -> bool:
 	var target_cell = world_to_map(mouse_pos)
 
 	for dir in DIRECTIONS:
@@ -170,7 +168,7 @@ func show_available_position():
 		swap_turn()
 
 
-func check_isolated_area(prep_mode=false):
+func check_isolated_area(prep_mode = false):
 	var checked_tiles = []
 	
 	for x in range(map.size.x):
