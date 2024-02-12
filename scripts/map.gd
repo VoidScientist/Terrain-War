@@ -54,21 +54,18 @@ func _ready():
 #Game loop
 func _physics_process(delta):
 	mousePos = get_global_mouse_position()
-	# check if cell can be placed
 	var isCellClaimable = isCellEmpty(mousePos) and isPlayerCellAdjacent(mousePos, current)
 	
 	# if input pressed then claim
 	if Input.is_action_just_pressed("claim") and isCellClaimable:
 		# make the cell the color of the player turn
 		
-
 		if claimCell(mousePos, current):
 			score[players[current]] += 1
-		print(1-current, current)
 		flood_fill.change_ids(1-current,current)
 
 		check_isolated_area()
-		swapTurn()
+		current = (current+1)%2
 		
 		check_win()
 		update_ui()
@@ -161,10 +158,7 @@ func show_available_position():
 				av_pos += 1
 				
 	if av_pos == 0 and not score["p1"] + score["p2"] >= max_score:
-		swapTurn()
-
-func swapTurn():
-	current = (current+1)%2
+		current = (current+1)%2
 
 func check_isolated_area(prep_mode=false):
 	var checked_tiles = []
@@ -178,6 +172,5 @@ func check_isolated_area(prep_mode=false):
 				for pos in history:
 					checked_tiles.append(pos)
 					if success and not prep_mode:
-						print(current)
 						set_cellv(pos, current)
-						swapTurn()
+						score[players[current]] += 1
