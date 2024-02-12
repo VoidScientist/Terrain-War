@@ -156,16 +156,18 @@ func show_available_position():
 		
 	var cells = get_used_cells_by_id(playerTurn)
 	
-	var directions = [Vector2.UP, Vector2.DOWN, Vector2.RIGHT, Vector2.LEFT, Vector2(1,1), Vector2(1,-1), Vector2(-1,-1), Vector2(-1,1)]
 	tile_set.tile_set_modulate(3, player_colors[playerTurn])
 	for cell in cells:
-		for direction in directions:
+		for direction in DIRECTIONS:
 			if get_cellv(cell + direction) == -1:
 				set_cellv(cell + direction, 3)
 				av_pos += 1
 				
 	if av_pos == 0 and not p1_score + p2_score >= max_score:
-		match playerTurn:
+		swapTurn()
+
+func swapTurn():
+	match playerTurn:
 			TURNS.PLAYER1:
 				playerTurn = TURNS.PLAYER2
 			TURNS.PLAYER2:
@@ -184,9 +186,5 @@ func check_isolated_area(prep_mode=false):
 					checked_tiles.append(pos)
 					if success and not prep_mode:
 						set_cellv(pos, playerTurn)
-						match playerTurn:
-							TURNS.PLAYER1:
-								p1_score += 1
-							TURNS.PLAYER2:
-								p2_score += 1
+						swapTurn()
 			
