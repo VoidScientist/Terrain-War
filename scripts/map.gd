@@ -43,11 +43,7 @@ func _ready():
 	tile_set.tile_set_modulate(0, player_1_col)
 	tile_set.tile_set_modulate(1, player_2_col)
 	
-	# iterate through the map if cell valid add to max score 1
-	for x in range(map.size.x):
-		for y in range(map.size.y):
-			if get_cell(x, y) == -1:
-				max_score += 1
+	fillVoid()
 	
 	$UI.visible = true
 	set_camera_up()
@@ -86,6 +82,13 @@ func _process(delta):
 	# visual indication of whose turn it is
 	VisualServer.set_default_clear_color(player_colors[playerTurn])
 
+func fillVoid():
+	# iterate through the map if cell valid add to max score 1
+	for x in range(map.size.x):
+		for y in range(map.size.y):
+			if get_cell(x, y) == -1:
+				max_score += 1
+
 func highlight_clickable_cells():
 	tile_set.tile_set_modulate(3, player_colors[playerTurn])
 
@@ -123,10 +126,12 @@ func isCellEmpty(mousePos):
 func isPlayerCellAdjacent(mousePos, turn):
 	var cellClicked = world_to_map(mousePos)
 
+	# check whether cell clicked has an adjacent player cell
 	for dir in DIRECTIONS:
 		var adjCell = cellClicked + dir
 		if adjCell != cellClicked and get_cellv(adjCell) == turn:
 			return true
+	
 	return false
 
 func check_win():
