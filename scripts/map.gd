@@ -4,13 +4,15 @@ class_name Map
 #Mouse position assigned in _physics_process()
 var mousePos
 #State determining player turns
-enum TURNS {PLAYER1, PLAYER2}
+enum TURNS {PLAYER1 = 0, PLAYER2 = 1}
 export (TURNS) var playerTurn
 var map: Rect2
 # Player colors 
 export (Color) var player_1_col
 export (Color) var player_2_col
 var player_colors
+# Possible directions
+const DIRECTIONS := [Vector2.UP, Vector2.DOWN, Vector2.RIGHT, Vector2.LEFT, Vector2(1,1), Vector2(1,-1), Vector2(-1,-1), Vector2(-1,1)]
 # Algorithm instance
 var flood_fill
 # Get game camera
@@ -120,20 +122,12 @@ func isCellEmpty(mousePos):
 #check if a cell of the same player is adjacent to the cell the player wants to claim
 func isPlayerCellAdjacent(mousePos, turn):
 	var cellClicked = world_to_map(mousePos)
-	var tile
-	var near = [-1,0,1]
+	var tileId = turn
 	
-	match turn:
-		TURNS.PLAYER1:
-			tile = 0
-		TURNS.PLAYER2:
-			tile = 1
-			
-	for i in near:
-		for j in near:
-			var adjCell = cellClicked + Vector2(i,j)
-			if adjCell != cellClicked and get_cellv(adjCell) == tile:
-				return true
+	for dir in DIRECTIONS:
+		var adjCell = cellClicked + dir
+		if adjCell != cellClicked and get_cellv(adjCell) == tileId:
+			return true
 
 func check_win():
 	if p1_score + p2_score >= max_score:
