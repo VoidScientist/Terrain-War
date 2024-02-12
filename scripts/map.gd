@@ -7,6 +7,7 @@ export (Color) var player_2_col
 onready var camera: Camera2D = $Camera2D
 onready var score_bar: TextureRect = $UI/UI_container/progress_bar
 onready var win_band: Control = $UI/UI_container/win_band
+onready var player_colors := [player_1_col, player_2_col]
 
 const players = ["p1", "p2"]
 const DIRECTIONS := [Vector2.UP, Vector2.DOWN, Vector2.RIGHT, Vector2.LEFT, Vector2(1,1), Vector2(1,-1), Vector2(-1,-1), Vector2(-1,1)]
@@ -19,7 +20,6 @@ var score: Dictionary = {"p1": 1, "p2": 1}
 var max_score: int = 2
 var current: int = 0
 
-onready var player_colors := [player_1_col, player_2_col]
 var ignore := [-1, 3]
 
 
