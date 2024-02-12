@@ -82,13 +82,12 @@ func update_ui() -> void:
 	VisualServer.set_default_clear_color(player_colors[current])
 	
 	var new_gradient = Gradient.new()
-	var color_1_range = 0.0 + (score["p1"] - score["p2"]) / float(max_score)
+	var color_1_range = (score["p1"] - score["p2"]) / float(max_score)
 	
 	new_gradient.colors = PoolColorArray([player_1_col, player_2_col])
 	new_gradient.offsets = PoolRealArray([color_1_range, 0.5 + color_1_range])
 	new_gradient.set_interpolation_mode(new_gradient.GRADIENT_INTERPOLATE_CONSTANT)
 	score_bar.get_texture().set_gradient(new_gradient)
-	score_bar.update()
 
 
 func set_camera_up() -> void:
