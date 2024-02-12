@@ -58,21 +58,22 @@ func _physics_process(delta):
 	
 	# if input pressed then claim
 	if Input.is_action_just_pressed("claim") and isCellClaimable:
-		# make the cell the color of the player turn
 		
-		if claimCell(mousePos, current):
-			score[players[current]] += 1
+		if not claimCell(mousePos, current): return
+		
+		score[players[current]] += 1
 		flood_fill.change_ids(1-current,current)
 
 		check_isolated_area()
-		current = (current+1)%2
-		
+		changeTurn()
 		
 		update_ui()
 		check_win()
 		update_ui()
 
-
+func changeTurn():
+	current = (current+1)%2
+	
 func fillVoid():
 	# iterate through the map if cell valid add to max score 1
 	for x in range(map.size.x):
@@ -89,9 +90,11 @@ func update_ui():
 	show_available_position()
 	# visual indication of whose turn it is
 	VisualServer.set_default_clear_color(player_colors[current])
+	
 	var new_gradient = Gradient.new()
-	new_gradient.colors = PoolColorArray([player_1_col, player_2_col])
 	var color_1_range = 0.0 + (score["p1"] - score["p2"]) / float(max_score)
+	
+	new_gradient.colors = PoolColorArray([player_1_col, player_2_col])
 	new_gradient.offsets = PoolRealArray([color_1_range, 0.5 + color_1_range])
 	new_gradient.set_interpolation_mode(new_gradient.GRADIENT_INTERPOLATE_CONSTANT)
 	score_bar.get_texture().set_gradient(new_gradient)
@@ -109,7 +112,6 @@ func set_camera_up():
 #Claiming a cell
 func claimCell(mousePos, cell):
 	var cellClicked = world_to_map(mousePos)
-	
 	set_cell(cellClicked.x, cellClicked.y, cell)
 	return true
 	
@@ -162,7 +164,7 @@ func show_available_position():
 				av_pos += 1
 				
 	if av_pos == 0 and not score["p1"] + score["p2"] >= max_score:
-		current = (current+1)%2
+		changeTurn()
 
 func check_isolated_area(prep_mode=false):
 	var checked_tiles = []
