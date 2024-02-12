@@ -27,16 +27,21 @@ var ignore := [-1, 3]
 
 #Initialising the first player's turn
 func _ready():
+	# get the rect of the map
 	map = get_used_rect()
+	# init the algorithm
 	flood_fill = FloodFill.new(map, self, 1-playerTurn, playerTurn)
+	# list of player_colors used when turn change
 	player_colors = [player_1_col, player_2_col]
 	
 	# Used to fill empty spaces (so that it doesn't hinder max score)
 	check_isolated_area(true)
 	
+	# set player tiles with corresponding colors
 	tile_set.tile_set_modulate(0, player_1_col)
 	tile_set.tile_set_modulate(1, player_2_col)
 	
+	# iterate through the map if cell valid add to max score 1
 	for x in range(map.size.x):
 		for y in range(map.size.y):
 			if get_cell(x, y) == -1:
@@ -55,6 +60,7 @@ func _physics_process(delta):
 	# if input pressed then claim
 	if Input.is_action_just_pressed("claim") and isCellClaimable:
 		# make the cell the color of the player turn
+		# TODO: REFACTOR THIS
 		match playerTurn:
 			TURNS.PLAYER1:
 				if claimCell(mousePos, 0):
@@ -75,7 +81,7 @@ func _physics_process(delta):
 func _process(delta):
 	# visual indication of where you can go
 	show_available_position()
-	# visual indication of who's turn it is
+	# visual indication of whose turn it is
 	VisualServer.set_default_clear_color(player_colors[playerTurn])
 
 func highlight_clickable_cells():
@@ -109,12 +115,7 @@ func claimCell(mousePos, cell):
 	
 #Is the target cell empty ?
 func isCellEmpty(mousePos):
-	var cellClicked = world_to_map(mousePos)
-	
-	if get_cellv(cellClicked) in ignore:
-		return true
-	else:
-		return false
+	return get_cellv(world_to_map(mousePos)) in ignore
 		
 #check if a cell of the same player is adjacent to the cell the player wants to claim
 func isPlayerCellAdjacent(mousePos, turn):
