@@ -1,38 +1,32 @@
 extends TileMap
 class_name Map
 
-
-var mouse_pos
-
-const players = ["p1", "p2"]
-var current = 0
-
-var map: Rect2
-
 export (Color) var player_1_col
 export (Color) var player_2_col
-var player_colors
 
+onready var camera: Camera2D = $Camera2D
+onready var score_bar: ProgressBar = $UI/UI_container/progress_bar
+onready var win_band: Control = $UI/UI_container/win_band
+
+const players = ["p1", "p2"]
 const DIRECTIONS := [Vector2.UP, Vector2.DOWN, Vector2.RIGHT, Vector2.LEFT, Vector2(1,1), Vector2(1,-1), Vector2(-1,-1), Vector2(-1,1)]
 
-var flood_fill
+var mouse_pos: Vector2
+var flood_fill: FloodFill
+var map: Rect2
 
-onready var camera = $Camera2D
+var score: Dictionary = {"p1": 1, "p2": 1}
+var max_score: int = 2
+var current: int = 0
 
-onready var score_bar = $UI/UI_container/progress_bar
-onready var win_band = $UI/UI_container/win_band
-
-var score = {"p1": 1, "p2": 1}
-var max_score = 2
-
+var player_colors := [player_1_col, player_2_col]
 var ignore := [-1, 3]
+
 
 func _ready():
 	map = get_used_rect()
 
 	flood_fill = FloodFill.new(map, self, 1-current, current)
-	
-	player_colors = [player_1_col, player_2_col]
 	
 	check_isolated_area(true)
 	
@@ -45,8 +39,10 @@ func _ready():
 	set_camera_up()
 	update_ui()
 
+
 func _physics_process(delta):
 	mouse_pos = get_global_mouse_position()
+	
 	var cell_claimable = is_cell_empty(mouse_pos) and ally_cell_adj(mouse_pos, current)
 	
 	if Input.is_action_just_pressed("claim") and cell_claimable:
@@ -61,18 +57,25 @@ func _physics_process(delta):
 		check_win()
 		update_ui()
 
+
 func swap_turn():
 	current = (current+1)%2
 	flood_fill.change_ids(1-current,current)
 	
+	
 func fill_void():
 	for x in range(map.size.x):
+		
 		for y in range(map.size.y):
+			
 			if get_cell(x, y) == -1:
+				
 				max_score += 1
+
 
 func highlight_clickable_cells():
 	tile_set.tile_set_modulate(3, player_colors[current])
+
 
 func update_ui():
 	clean_available()
@@ -88,6 +91,7 @@ func update_ui():
 	score_bar.get_texture().set_gradient(new_gradient)
 	score_bar.update()
 
+
 func set_camera_up():
 	var pix_size = get_used_rect().size
 	var size = max((pix_size.y * cell_size.y) / get_viewport().get_visible_rect().size.y, 
@@ -96,14 +100,17 @@ func set_camera_up():
 	camera.position.x = map.get_center().x * cell_size.x
 	camera.position.y = map.get_center().y * cell_size.y
 
+
 func claim_cell(mouse_pos, cell):
 	var target_cell = world_to_map(mouse_pos)
 	set_cell(target_cell.x, target_cell.y, cell)
 	return true
 	
+	
 func is_cell_empty(mouse_pos):
 	return get_cellv(world_to_map(mouse_pos)) in ignore
-		
+
+
 func ally_cell_adj(mouse_pos, turn):
 	var target_cell = world_to_map(mouse_pos)
 
@@ -113,6 +120,7 @@ func ally_cell_adj(mouse_pos, turn):
 			return true
 	
 	return false
+
 
 func check_win():
 	var game_finished = score["p1"] + score["p2"] >= max_score
@@ -133,10 +141,14 @@ func check_win():
 	
 	win_band.appear()
 
+
 func clean_available():
 	var old_av_pos = get_used_cells_by_id(3)
+	
 	for old_pos in old_av_pos:
+		
 		set_cellv(old_pos, -1)
+
 
 func show_available_position():
 	var av_pos = 0
@@ -144,14 +156,19 @@ func show_available_position():
 	var cells = get_used_cells_by_id(current)
 	
 	tile_set.tile_set_modulate(3, player_colors[current])
+	
 	for cell in cells:
+		
 		for direction in DIRECTIONS:
+			
 			if not get_cellv(cell + direction) == -1: continue
+			
 			set_cellv(cell + direction, 3)
 			av_pos += 1
 				
 	if av_pos == 0 and not score["p1"] + score["p2"] >= max_score:
 		swap_turn()
+
 
 func check_isolated_area(prep_mode=false):
 	var checked_tiles = []
