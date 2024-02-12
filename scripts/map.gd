@@ -4,7 +4,7 @@ class_name Map
 #Mouse position assigned in _physics_process()
 var mousePos
 #State determining player turns
-enum TURNS {PLAYER1 = 0, PLAYER2 = 1}
+enum TURNS {PLAYER1, PLAYER2}
 export (TURNS) var playerTurn
 var map: Rect2
 # Player colors 
@@ -122,10 +122,11 @@ func isCellEmpty(mousePos):
 #check if a cell of the same player is adjacent to the cell the player wants to claim
 func isPlayerCellAdjacent(mousePos, turn):
 	var cellClicked = world_to_map(mousePos)
-	
+
 	for dir in DIRECTIONS:
 		var adjCell = cellClicked + dir
-		return adjCell != cellClicked and get_cellv(adjCell) == playerTurn
+		if adjCell != cellClicked and get_cellv(adjCell) == turn:
+			return true
 
 func check_win():
 	if p1_score + p2_score >= max_score:
