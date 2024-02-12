@@ -165,16 +165,26 @@ func show_available_position():
 
 func check_isolated_area(prep_mode=false):
 	var checked_tiles = []
+	
 	# Loops through map, and check for secluded spaces
 	for x in range(map.size.x):
 		for y in range(map.size.y):
-			if not Vector2(x, y) in checked_tiles and get_cell(x, y) in ignore:
-				flood_fill.set_start_pos(Vector2(x, y))
-				var results = flood_fill.check_map()
-				var success = results[0]
-				var history = results[1]
-				for pos in history:
-					checked_tiles.append(pos)
-					if success and not prep_mode:
-						set_cellv(pos, current)
-						score[players[current]] += 1
+			
+			var alreadyChecked = Vector2(x, y) in checked_tiles 
+			var isInvalid = not get_cell(x, y) in ignore
+			
+			if alreadyChecked in checked_tiles or isInvalid: continue
+			
+			flood_fill.set_start_pos(Vector2(x, y))
+			var results = flood_fill.check_map()
+			var success = results[0]
+			var history = results[1]
+			
+			for pos in history:
+				
+				checked_tiles.append(pos)
+				
+				if not success or prep_mode: continue
+				
+				set_cellv(pos, current)
+				score[players[current]] += 1
