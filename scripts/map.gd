@@ -5,7 +5,7 @@ export (Color) var player_1_col
 export (Color) var player_2_col
 
 onready var camera: Camera2D = $Camera2D
-onready var score_bar: ProgressBar = $UI/UI_container/progress_bar
+onready var score_bar: TextureRect = $UI/UI_container/progress_bar
 onready var win_band: Control = $UI/UI_container/win_band
 
 const players = ["p1", "p2"]
@@ -19,7 +19,7 @@ var score: Dictionary = {"p1": 1, "p2": 1}
 var max_score: int = 2
 var current: int = 0
 
-var player_colors := [player_1_col, player_2_col]
+onready var player_colors := [player_1_col, player_2_col]
 var ignore := [-1, 3]
 
 
@@ -78,6 +78,7 @@ func highlight_clickable_cells():
 
 
 func update_ui():
+	print(player_colors)
 	clean_available()
 	show_available_position()
 	VisualServer.set_default_clear_color(player_colors[current])
