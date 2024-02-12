@@ -124,8 +124,8 @@ func ally_cell_adj(mouse_pos, turn):
 
 	# check whether cell clicked has an adjacent player cell
 	for dir in DIRECTIONS:
-		var adjCell = target_cell + dir
-		if adjCell != target_cell and get_cellv(adjCell) == turn:
+		var adj_cell = target_cell + dir
+		if adj_cell != target_cell and get_cellv(adj_cell) == turn:
 			return true
 	
 	return false
