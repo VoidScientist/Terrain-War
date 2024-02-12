@@ -78,7 +78,6 @@ func highlight_clickable_cells():
 
 
 func update_ui():
-	print(player_colors)
 	clean_available()
 	show_available_position()
 	VisualServer.set_default_clear_color(player_colors[current])
