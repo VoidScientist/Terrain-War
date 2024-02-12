@@ -20,7 +20,7 @@ var score: Dictionary = {"p1": 1, "p2": 1}
 var max_score: int = 2
 var current: int = 0
 
-var ignore := [-1, 3]
+var ownerless_tiles := [-1, 3]
 
 
 func _ready() -> void:
@@ -105,7 +105,7 @@ func claim_cell(mouse_pos, cell) -> void:
 	
 	
 func is_cell_empty(mouse_pos) -> bool:
-	return get_cellv(world_to_map(mouse_pos)) in ignore
+	return get_cellv(world_to_map(mouse_pos)) in ownerless_tiles
 
 
 func ally_cell_adj(mouse_pos, turn) -> bool:
@@ -115,8 +115,7 @@ func ally_cell_adj(mouse_pos, turn) -> bool:
 		
 		var adj_cell = target_cell + dir
 		
-		if get_cellv(adj_cell) == turn:
-			return true
+		if get_cellv(adj_cell) == turn: return true
 	
 	return false
 
@@ -124,8 +123,7 @@ func ally_cell_adj(mouse_pos, turn) -> bool:
 func check_win() -> void:
 	var game_finished = score["p1"] + score["p2"] >= max_score
 	
-	if not game_finished:
-		return
+	if not game_finished: return
 		
 	var winner = 0 if score["p1"] > score["p2"] else 1
 	var font_color = player_colors[winner]
@@ -176,7 +174,7 @@ func check_isolated_area(prep_mode = false) -> void:
 		for y in range(map.size.y):
 			
 			var checked = Vector2(x, y) in checked_tiles 
-			var is_invalid = not get_cell(x, y) in ignore
+			var is_invalid = not get_cell(x, y) in ownerless_tiles
 			
 			if checked or is_invalid: continue
 			
