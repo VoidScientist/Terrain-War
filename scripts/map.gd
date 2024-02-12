@@ -3,9 +3,12 @@ class_name Map
 
 #Mouse position assigned in _physics_process()
 var mousePos
+
 #State determining player turns
-enum TURNS {PLAYER1, PLAYER2}
-export (TURNS) var playerTurn
+
+const players = ["p1", "p2"]
+var current = 0
+
 var map: Rect2
 # Player colors 
 export (Color) var player_1_col
@@ -31,7 +34,7 @@ func _ready():
 	# get the rect of the map
 	map = get_used_rect()
 	# init the algorithm
-	flood_fill = FloodFill.new(map, self, 1-playerTurn, playerTurn)
+	flood_fill = FloodFill.new(map, self, 1-current, current)
 	# list of player_colors used when turn change
 	player_colors = [player_1_col, player_2_col]
 	
@@ -52,25 +55,19 @@ func _ready():
 func _physics_process(delta):
 	mousePos = get_global_mouse_position()
 	# check if cell can be placed
-	var isCellClaimable = isCellEmpty(mousePos) and isPlayerCellAdjacent(mousePos, playerTurn)
+	var isCellClaimable = isCellEmpty(mousePos) and isPlayerCellAdjacent(mousePos, current)
 	
 	# if input pressed then claim
 	if Input.is_action_just_pressed("claim") and isCellClaimable:
 		# make the cell the color of the player turn
-		# TODO: REFACTOR THIS
-		match playerTurn:
-			TURNS.PLAYER1:
-				if claimCell(mousePos, 0):
-					score["p1"] += 1
-				flood_fill.change_ids(1,0)
-				check_isolated_area()
-				
-			TURNS.PLAYER2:
-				if claimCell(mousePos, 1):
-					score["p2"] += 1
-				flood_fill.change_ids(0,1)
-				check_isolated_area()
 		
+
+		if claimCell(mousePos, current):
+			score[players[current]] += 1
+		print(1-current, current)
+		flood_fill.change_ids(1-current,current)
+
+		check_isolated_area()
 		swapTurn()
 		
 		check_win()
@@ -80,7 +77,7 @@ func _process(delta):
 	# visual indication of where you can go
 	show_available_position()
 	# visual indication of whose turn it is
-	VisualServer.set_default_clear_color(player_colors[playerTurn])
+	VisualServer.set_default_clear_color(player_colors[current])
 
 func fillVoid():
 	# iterate through the map if cell valid add to max score 1
@@ -90,7 +87,7 @@ func fillVoid():
 				max_score += 1
 
 func highlight_clickable_cells():
-	tile_set.tile_set_modulate(3, player_colors[playerTurn])
+	tile_set.tile_set_modulate(3, player_colors[current])
 
 # Update UI according to scores:
 func update_ui():
@@ -154,9 +151,9 @@ func show_available_position():
 	for old_pos in old_av_pos:
 		set_cellv(old_pos, -1)
 		
-	var cells = get_used_cells_by_id(playerTurn)
+	var cells = get_used_cells_by_id(current)
 	
-	tile_set.tile_set_modulate(3, player_colors[playerTurn])
+	tile_set.tile_set_modulate(3, player_colors[current])
 	for cell in cells:
 		for direction in DIRECTIONS:
 			if get_cellv(cell + direction) == -1:
@@ -167,11 +164,7 @@ func show_available_position():
 		swapTurn()
 
 func swapTurn():
-	match playerTurn:
-			TURNS.PLAYER1:
-				playerTurn = TURNS.PLAYER2
-			TURNS.PLAYER2:
-				playerTurn = TURNS.PLAYER1
+	current = (current+1)%2
 
 func check_isolated_area(prep_mode=false):
 	var checked_tiles = []
@@ -185,5 +178,6 @@ func check_isolated_area(prep_mode=false):
 				for pos in history:
 					checked_tiles.append(pos)
 					if success and not prep_mode:
-						set_cellv(pos, playerTurn)
+						print(current)
+						set_cellv(pos, current)
 						swapTurn()
