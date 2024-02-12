@@ -101,6 +101,7 @@ func set_camera_up() -> void:
 
 func claim_cell(mouse_pos, cell) -> void:
 	var target_cell = world_to_map(mouse_pos)
+	
 	set_cell(target_cell.x, target_cell.y, cell)
 	
 	
@@ -161,6 +162,7 @@ func show_available_position() -> void:
 			if not get_cellv(cell + direction) == -1: continue
 			
 			set_cellv(cell + direction, 3)
+			
 			av_pos += 1
 				
 	if av_pos == 0 and not score["p1"] + score["p2"] >= max_score:
@@ -171,6 +173,7 @@ func check_isolated_area(prep_mode = false) -> void:
 	var checked_tiles = []
 	
 	for x in range(map.size.x):
+		
 		for y in range(map.size.y):
 			
 			var checked = Vector2(x, y) in checked_tiles 
