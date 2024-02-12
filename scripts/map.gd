@@ -127,6 +127,7 @@ func isPlayerCellAdjacent(mousePos, turn):
 		var adjCell = cellClicked + dir
 		if adjCell != cellClicked and get_cellv(adjCell) == turn:
 			return true
+	return false
 
 func check_win():
 	if p1_score + p2_score >= max_score:
