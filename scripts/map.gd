@@ -131,17 +131,23 @@ func ally_cell_adj(mouse_pos, turn):
 	return false
 
 func check_win():
-	if score["p1"] + score["p2"] >= max_score:
-		if score["p1"] > score["p2"]:
-			win_band.set_text("Joueur 1 a gagné !")
-			win_band.get_child(2).set("custom_colors/default_color", player_1_col)
-		elif score["p1"] < score["p2"]:
-			win_band.set_text("Joueur 2 a gagné !")
-			win_band.get_child(2).set("custom_colors/default_color", player_2_col)
-		elif score["p1"] == score["p2"]:
-			win_band.set_text("Match nul !")
-			win_band.get_child(2).set("custom_colors/default_color", Color.whitesmoke)
-		win_band.appear()
+	var game_finished = score["p1"] + score["p2"] >= max_score
+	
+	if not game_finished:
+		return
+		
+	var winner = 0 if score["p1"] > score["p2"] else 1
+	var font_color = player_colors[winner]
+	var band_text = "Joueur " + str(winner + 1) + " a gagné!"
+	
+	if score["p1"] == score["p2"]:
+		band_text = "Match nul !"
+		font_color = Color.whitesmoke
+	
+	win_band.set_text(band_text)
+	win_band.get_child(2).set("custom_colors/default_color", font_color)
+	
+	win_band.appear()
 
 func clean_available():
 	# clean up old highlighted cells
@@ -178,6 +184,7 @@ func check_isolated_area(prep_mode=false):
 			if checked or is_invalid: continue
 			
 			flood_fill.set_start_pos(Vector2(x, y))
+			
 			var results = flood_fill.check_map()
 			var success = results[0]
 			var history = results[1]
