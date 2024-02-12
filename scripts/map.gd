@@ -112,14 +112,16 @@ func ally_cell_adj(mouse_pos, turn) -> bool:
 	var target_cell = world_to_map(mouse_pos)
 
 	for dir in DIRECTIONS:
+		
 		var adj_cell = target_cell + dir
-		if adj_cell != target_cell and get_cellv(adj_cell) == turn:
+		
+		if get_cellv(adj_cell) == turn:
 			return true
 	
 	return false
 
 
-func check_win():
+func check_win() -> void:
 	var game_finished = score["p1"] + score["p2"] >= max_score
 	
 	if not game_finished:
@@ -139,7 +141,7 @@ func check_win():
 	win_band.appear()
 
 
-func clean_available():
+func clean_available() -> void:
 	var old_av_pos = get_used_cells_by_id(3)
 	
 	for old_pos in old_av_pos:
@@ -147,7 +149,7 @@ func clean_available():
 		set_cellv(old_pos, -1)
 
 
-func show_available_position():
+func show_available_position() -> void:
 	var av_pos = 0
 		
 	var cells = get_used_cells_by_id(current)
@@ -167,7 +169,7 @@ func show_available_position():
 		swap_turn()
 
 
-func check_isolated_area(prep_mode = false):
+func check_isolated_area(prep_mode = false) -> void:
 	var checked_tiles = []
 	
 	for x in range(map.size.x):
