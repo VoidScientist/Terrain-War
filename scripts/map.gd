@@ -141,12 +141,15 @@ func check_win():
 			win_band.get_child(2).set("custom_colors/default_color", Color.whitesmoke)
 		win_band.appear()
 
-func show_available_position():
-	var av_pos = 0
+func clean_available():
 	# clean up old highlighted cells
 	var old_av_pos = get_used_cells_by_id(3)
 	for old_pos in old_av_pos:
 		set_cellv(old_pos, -1)
+
+func show_available_position():
+	var av_pos = 0
+	clean_available()
 		
 	var cells = get_used_cells_by_id(current)
 	
