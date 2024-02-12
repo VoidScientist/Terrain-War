@@ -67,14 +67,11 @@ func _physics_process(delta):
 		check_isolated_area()
 		current = (current+1)%2
 		
+		
+		update_ui()
 		check_win()
 		update_ui()
-		
-func _process(delta):
-	# visual indication of where you can go
-	show_available_position()
-	# visual indication of whose turn it is
-	VisualServer.set_default_clear_color(player_colors[current])
+
 
 func fillVoid():
 	# iterate through the map if cell valid add to max score 1
@@ -88,6 +85,10 @@ func highlight_clickable_cells():
 
 # Update UI according to scores:
 func update_ui():
+	# visual indication of where you can go
+	show_available_position()
+	# visual indication of whose turn it is
+	VisualServer.set_default_clear_color(player_colors[current])
 	var new_gradient = Gradient.new()
 	new_gradient.colors = PoolColorArray([player_1_col, player_2_col])
 	var color_1_range = 0.0 + (score["p1"] - score["p2"]) / float(max_score)
