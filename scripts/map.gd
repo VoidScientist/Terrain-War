@@ -122,12 +122,10 @@ func isCellEmpty(mousePos):
 #check if a cell of the same player is adjacent to the cell the player wants to claim
 func isPlayerCellAdjacent(mousePos, turn):
 	var cellClicked = world_to_map(mousePos)
-	var tileId = turn
 	
 	for dir in DIRECTIONS:
 		var adjCell = cellClicked + dir
-		if adjCell != cellClicked and get_cellv(adjCell) == tileId:
-			return true
+		return adjCell != cellClicked and get_cellv(adjCell) == playerTurn
 
 func check_win():
 	if p1_score + p2_score >= max_score:
@@ -144,6 +142,7 @@ func check_win():
 
 func show_available_position():
 	var av_pos = 0
+	# clean up old highlighted cells
 	var old_av_pos = get_used_cells_by_id(3)
 	for old_pos in old_av_pos:
 		set_cellv(old_pos, -1)
