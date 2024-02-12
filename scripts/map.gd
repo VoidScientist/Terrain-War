@@ -2,7 +2,7 @@ extends TileMap
 class_name Map
 
 #Mouse position assigned in _physics_process()
-var mousePos
+var mouse_pos
 
 #State determining player turns
 
@@ -45,7 +45,7 @@ func _ready():
 	tile_set.tile_set_modulate(0, player_1_col)
 	tile_set.tile_set_modulate(1, player_2_col)
 	
-	fillVoid()
+	fill_void()
 	
 	$UI.visible = true
 	set_camera_up()
@@ -53,28 +53,27 @@ func _ready():
 
 #Game loop
 func _physics_process(delta):
-	mousePos = get_global_mouse_position()
-	var isCellClaimable = isCellEmpty(mousePos) and isPlayerCellAdjacent(mousePos, current)
+	mouse_pos = get_global_mouse_position()
+	var cell_claimable = is_cell_empty(mouse_pos) and ally_cell_adj(mouse_pos, current)
 	
 	# if input pressed then claim
-	if Input.is_action_just_pressed("claim") and isCellClaimable:
+	if Input.is_action_just_pressed("claim") and cell_claimable:
 		
-		if not claimCell(mousePos, current): return
+		if not claim_cell(mouse_pos, current): return
 		
 		score[players[current]] += 1
-		flood_fill.change_ids(1-current,current)
 
 		check_isolated_area()
-		changeTurn()
-		
+		swap_turn()
 		update_ui()
 		check_win()
 		update_ui()
 
-func changeTurn():
+func swap_turn():
 	current = (current+1)%2
+	flood_fill.change_ids(1-current,current)
 	
-func fillVoid():
+func fill_void():
 	# iterate through the map if cell valid add to max score 1
 	for x in range(map.size.x):
 		for y in range(map.size.y):
@@ -110,23 +109,23 @@ func set_camera_up():
 	camera.position.y = map.get_center().y * cell_size.y
 
 #Claiming a cell
-func claimCell(mousePos, cell):
-	var cellClicked = world_to_map(mousePos)
-	set_cell(cellClicked.x, cellClicked.y, cell)
+func claim_cell(mouse_pos, cell):
+	var target_cell = world_to_map(mouse_pos)
+	set_cell(target_cell.x, target_cell.y, cell)
 	return true
 	
 #Is the target cell empty ?
-func isCellEmpty(mousePos):
-	return get_cellv(world_to_map(mousePos)) in ignore
+func is_cell_empty(mouse_pos):
+	return get_cellv(world_to_map(mouse_pos)) in ignore
 		
 #check if a cell of the same player is adjacent to the cell the player wants to claim
-func isPlayerCellAdjacent(mousePos, turn):
-	var cellClicked = world_to_map(mousePos)
+func ally_cell_adj(mouse_pos, turn):
+	var target_cell = world_to_map(mouse_pos)
 
 	# check whether cell clicked has an adjacent player cell
 	for dir in DIRECTIONS:
-		var adjCell = cellClicked + dir
-		if adjCell != cellClicked and get_cellv(adjCell) == turn:
+		var adjCell = target_cell + dir
+		if adjCell != target_cell and get_cellv(adjCell) == turn:
 			return true
 	
 	return false
@@ -164,7 +163,7 @@ func show_available_position():
 				av_pos += 1
 				
 	if av_pos == 0 and not score["p1"] + score["p2"] >= max_score:
-		changeTurn()
+		swap_turn()
 
 func check_isolated_area(prep_mode=false):
 	var checked_tiles = []
@@ -173,10 +172,10 @@ func check_isolated_area(prep_mode=false):
 	for x in range(map.size.x):
 		for y in range(map.size.y):
 			
-			var alreadyChecked = Vector2(x, y) in checked_tiles 
-			var isInvalid = not get_cell(x, y) in ignore
+			var checked = Vector2(x, y) in checked_tiles 
+			var is_invalid = not get_cell(x, y) in ignore
 			
-			if alreadyChecked in checked_tiles or isInvalid: continue
+			if checked or is_invalid: continue
 			
 			flood_fill.set_start_pos(Vector2(x, y))
 			var results = flood_fill.check_map()
