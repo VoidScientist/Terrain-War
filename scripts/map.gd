@@ -21,8 +21,7 @@ onready var camera = $Camera2D
 onready var score_bar = $UI/UI_container/progress_bar
 onready var win_band = $UI/UI_container/win_band
 # Player scores
-var p1_score = 1
-var p2_score = 1
+var score = {"p1": 1, "p2": 1}
 var max_score = 2
 # Cells considered as void :
 var ignore := [-1, 3]
@@ -62,16 +61,17 @@ func _physics_process(delta):
 		match playerTurn:
 			TURNS.PLAYER1:
 				if claimCell(mousePos, 0):
-					p1_score += 1
+					score["p1"] += 1
 				flood_fill.change_ids(1,0)
 				check_isolated_area()
-				playerTurn = TURNS.PLAYER2
+				
 			TURNS.PLAYER2:
 				if claimCell(mousePos, 1):
-					p2_score += 1
+					score["p2"] += 1
 				flood_fill.change_ids(0,1)
 				check_isolated_area()
-				playerTurn = TURNS.PLAYER1
+		
+		swapTurn()
 		
 		check_win()
 		update_ui()
@@ -96,7 +96,7 @@ func highlight_clickable_cells():
 func update_ui():
 	var new_gradient = Gradient.new()
 	new_gradient.colors = PoolColorArray([player_1_col, player_2_col])
-	var color_1_range = 0.0 + (p1_score - p2_score) / float(max_score)
+	var color_1_range = 0.0 + (score["p1"] - score["p2"]) / float(max_score)
 	new_gradient.offsets = PoolRealArray([color_1_range, 0.5 + color_1_range])
 	new_gradient.set_interpolation_mode(new_gradient.GRADIENT_INTERPOLATE_CONSTANT)
 	score_bar.get_texture().set_gradient(new_gradient)
@@ -135,14 +135,14 @@ func isPlayerCellAdjacent(mousePos, turn):
 	return false
 
 func check_win():
-	if p1_score + p2_score >= max_score:
-		if p1_score > p2_score:
+	if score["p1"] + score["p2"] >= max_score:
+		if score["p1"] > score["p2"]:
 			win_band.set_text("Joueur 1 a gagné !")
 			win_band.get_child(2).set("custom_colors/default_color", player_1_col)
-		elif p1_score < p2_score:
+		elif score["p1"] < score["p2"]:
 			win_band.set_text("Joueur 2 a gagné !")
 			win_band.get_child(2).set("custom_colors/default_color", player_2_col)
-		elif p1_score == p2_score:
+		elif score["p1"] == score["p2"]:
 			win_band.set_text("Match nul !")
 			win_band.get_child(2).set("custom_colors/default_color", Color.whitesmoke)
 		win_band.appear()
@@ -163,7 +163,7 @@ func show_available_position():
 				set_cellv(cell + direction, 3)
 				av_pos += 1
 				
-	if av_pos == 0 and not p1_score + p2_score >= max_score:
+	if av_pos == 0 and not score["p1"] + score["p2"] >= max_score:
 		swapTurn()
 
 func swapTurn():
@@ -187,4 +187,3 @@ func check_isolated_area(prep_mode=false):
 					if success and not prep_mode:
 						set_cellv(pos, playerTurn)
 						swapTurn()
-			
