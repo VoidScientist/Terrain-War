@@ -170,8 +170,9 @@ func check_isolated_area(prep_mode=false):
 		for y in range(map.size.y):
 			if not Vector2(x, y) in checked_tiles and get_cell(x, y) in ignore:
 				flood_fill.set_start_pos(Vector2(x, y))
-				var success = flood_fill.check_map()[0]
-				var history = flood_fill.check_map()[1]
+				var results = flood_fill.check_map()
+				var success = results[0]
+				var history = results[1]
 				for pos in history:
 					checked_tiles.append(pos)
 					if success and not prep_mode:
