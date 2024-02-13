@@ -18,7 +18,7 @@ var map: Rect2
 
 var score: Dictionary = {"p1": 1, "p2": 1}
 var max_score: int = 2
-var current: int = 0
+var current: int = 1
 
 var ownerless_tiles := [-1, 3]
 
@@ -33,9 +33,12 @@ func _ready() -> void:
 	
 	$UI.visible = true
 	
+	camera.focus_on_area(get_used_rect(), cell_size)
+	
+	# apparently this line is for setting up map
 	check_isolated_area(true)
+	
 	setup_map()
-	set_camera_up()
 	update_ui()
 
 
@@ -88,16 +91,7 @@ func update_ui() -> void:
 	new_gradient.offsets = PoolRealArray([color_1_range, 0.5 + color_1_range])
 	new_gradient.set_interpolation_mode(new_gradient.GRADIENT_INTERPOLATE_CONSTANT)
 	score_bar.get_texture().set_gradient(new_gradient)
-
-
-func set_camera_up() -> void:
-	var pix_size = get_used_rect().size
-	var size = max((pix_size.y * cell_size.y) / get_viewport().get_visible_rect().size.y, 
-				  (pix_size.x * cell_size.x) / get_viewport().get_visible_rect().size.x)
-	camera.zoom = Vector2(size, size)
-	camera.position.x = map.get_center().x * cell_size.x
-	camera.position.y = map.get_center().y * cell_size.y
-
+	
 
 func claim_cell(mouse_pos, cell) -> void:
 	var target_cell = world_to_map(mouse_pos)
@@ -177,9 +171,9 @@ func check_isolated_area(prep_mode = false) -> void:
 		for y in range(map.size.y):
 			
 			var checked = Vector2(x, y) in checked_tiles 
-			var is_invalid = not get_cell(x, y) in ownerless_tiles
+			var is_player = not get_cell(x, y) in ownerless_tiles
 			
-			if checked or is_invalid: continue
+			if checked or is_player: continue
 			
 			flood_fill.set_start_pos(Vector2(x, y))
 			
@@ -192,6 +186,6 @@ func check_isolated_area(prep_mode = false) -> void:
 				checked_tiles.append(pos)
 				
 				if not success or prep_mode: continue
-				
+
 				set_cellv(pos, current)
 				score[players[current]] += 1
