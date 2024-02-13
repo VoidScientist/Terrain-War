@@ -19,11 +19,9 @@ var success: bool = true
 func is_valid(cell_pos: Vector2) -> bool:
 	var tile_id = map.get_cellv(cell_pos)
 	
-	if not borders.has_point(cell_pos):
-		return false
+	if not borders.has_point(cell_pos): return false
 	
-	if tile_id in ignore:
-		return true
+	if tile_id in ignore: return true
 	
 	if tile_id == error_id:
 		out_of_map = false
