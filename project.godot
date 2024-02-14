@@ -27,7 +27,7 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "PlayerService",
 "language": "GDScript",
-"path": "res://scenes/player_service.gd"
+"path": "res://scripts/player_service.gd"
 } ]
 _global_script_class_icons={
 "FloodFill": "",
