@@ -1,10 +1,10 @@
 class_name Player
 
-var name
-var tile_id
-var color
+var name: String
+var tile_id: int
+var color: Color
 
-var score = 0
+var score := 0
 
 func _init(new_name, new_tile_id, new_color):
 	name = new_name

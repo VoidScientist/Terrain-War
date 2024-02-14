@@ -18,22 +18,22 @@ func _ready():
 
 	players = [player1, player2]
 
-func randomize_turn():
+func randomize_turn() -> Player:
 	current = rand_gen.randi_range(0,1)
 	return players[current]
 	
-func change_turn():
+func change_turn() -> Player:
 	current = (current+1)%2
 	return players[current]
 	
-func get_other():
+func get_other() -> Player:
 	var other = (current+1)%2
 	return players[other]
 	
-func get_players():
+func get_players() -> Array:
 	return players
 
-func get_players_gradient(max_score):
+func get_players_gradient(max_score) -> Gradient:
 	var new_gradient = Gradient.new()
 	var color_1_range = (players[0].score - players[1].score) / float(max_score)
 	
@@ -46,7 +46,7 @@ func get_players_gradient(max_score):
 func game_finished(max_score) -> bool:
 	return players[0].score + players[1].score >= max_score
 
-func get_winner():
+func get_winner() -> Player:
 	if players[0].score == players[1].score:
 		return null
 		
