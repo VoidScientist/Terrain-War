@@ -18,10 +18,16 @@ _global_script_classes=[ {
 "class": "Map",
 "language": "GDScript",
 "path": "res://scripts/map.gd"
+}, {
+"base": "Reference",
+"class": "Player",
+"language": "GDScript",
+"path": "res://scripts/player_struct.gd"
 } ]
 _global_script_class_icons={
 "FloodFill": "",
-"Map": ""
+"Map": "",
+"Player": ""
 }
 
 [application]

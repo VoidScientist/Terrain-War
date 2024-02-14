@@ -1,16 +1,13 @@
-extends Node
+class_name Player
 
+var id
+var color
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+var score = 0
 
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func _init(new_id, new_color):
+	id = new_id
+	color = new_color
+	
+func add_score(value):
+	score += value
