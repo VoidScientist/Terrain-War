@@ -22,12 +22,14 @@ func randomize_turn():
 	current = rand_gen.randi_range(0,1)
 	return players[current]
 	
-func get_other():
-	print("enlo")
-	print(current)
+func change_turn():
 	current = (current+1)%2
-	print(current)
 	return players[current]
+	
+	
+func get_other():
+	var other = (current+1)%2
+	return players[other]
 	
 func get_players():
 	return players

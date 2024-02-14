@@ -55,10 +55,8 @@ func _physics_process(delta) -> void:
 
 		check_isolated_area()
 		
-		current_player = players.get_other()
+		current_player = players.change_turn()
 		print(current_player.tile_id)
-		
-		update_ui()
 		
 		if players.game_finished(max_score):
 			emit_signal("game_ended", players.get_winner())
@@ -139,7 +137,7 @@ func show_available_position() -> void:
 			av_pos += 1
 			
 	if av_pos == 0 and not score["p1"] + score["p2"] >= max_score:
-		current_player = players.get_other()
+		current_player = players.change_turn()
 
 
 func check_isolated_area(prep_mode = false) -> void:
