@@ -7,3 +7,7 @@ func appear():
 	
 func set_text(text):
 	$win_label.bbcode_text = "[center]" + text + "[/center]"
+
+
+
+

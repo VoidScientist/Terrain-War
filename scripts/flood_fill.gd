@@ -9,14 +9,12 @@ var queue := []
 var pos_history := []
 var ignore := [-1, 3]
 
-var error_id: int
-var self_id: int
 var map: TileMap
 
 var out_of_map: bool = true
 var success: bool = true
 
-func is_valid(cell_pos: Vector2) -> bool:
+func is_valid(cell_pos: Vector2, self_id, error_id) -> bool:
 	var tile_id = map.get_cellv(cell_pos)
 	
 	if not borders.has_point(cell_pos): return false
@@ -31,10 +29,6 @@ func is_valid(cell_pos: Vector2) -> bool:
 		out_of_map = false
 			
 	return false
-
-func change_ids(new_error_id: int, new_self_id: int) -> void:
-	error_id = new_error_id
-	self_id = new_self_id
 	
 func reset_var() -> void:
 	pos_history.clear()
@@ -51,20 +45,20 @@ func set_start_pos(new_start_pos) -> void:
 		return
 	queue.append(new_start_pos)
 
-func _init(new_borders, new_map, enemy_id, player_id):
+func _init(new_borders, new_map):
 	borders = new_borders
 	map = new_map
-	error_id = enemy_id
-	self_id = player_id
 	
-func check_map() -> Array:
+func check_map(self_id, error_id) -> Array:
 	while len(queue) > 0:
 		position = queue.pop_front()
 		pos_history.append(position)
 		
 		for direction in DIRECTIONS:
 			var new_pos = position + direction
-			if is_valid(new_pos) and not (new_pos in pos_history or new_pos in queue):
+			var found = (new_pos in pos_history or new_pos in queue)
+			
+			if is_valid(new_pos, self_id, error_id) and not found:
 				queue.append(new_pos)
 				
 	if out_of_map:
