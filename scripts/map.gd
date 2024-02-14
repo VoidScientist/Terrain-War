@@ -158,7 +158,7 @@ func show_available_position() -> void:
 			set_cellv(cell + direction, 3)
 			
 			av_pos += 1
-				
+			
 	if av_pos == 0 and not score["p1"] + score["p2"] >= max_score:
 		swap_turn()
 
@@ -186,6 +186,6 @@ func check_isolated_area(prep_mode = false) -> void:
 				checked_tiles.append(pos)
 				
 				if not success or prep_mode: continue
-
+				
 				set_cellv(pos, current)
 				score[players[current]] += 1
