@@ -55,7 +55,8 @@ func _physics_process(delta) -> void:
 
 		check_isolated_area()
 		
-		current_player = players.change_turn()
+		current_player = players.get_other()
+		print(current_player.tile_id)
 		
 		update_ui()
 		
@@ -80,11 +81,12 @@ func get_max_score() -> int:
 
 
 func update_ui() -> void:
-	clean_available()
 	show_available_position()
+	
 	VisualServer.set_default_clear_color(current_player.color)
 	
 	var gradient = players.get_players_gradient(max_score)
+	
 	score_bar.get_texture().set_gradient(gradient)
 	
 
@@ -111,17 +113,15 @@ func ally_cell_adj(mouse_pos) -> bool:
 			return true
 	
 	return false
+	
 
-
-func clean_available() -> void:
+func show_available_position() -> void:
 	var old_av_pos = get_used_cells_by_id(3)
 	
 	for old_pos in old_av_pos:
 		
 		set_cellv(old_pos, -1)
-
-
-func show_available_position() -> void:
+	
 	var av_pos = 0
 		
 	var cells = get_used_cells_by_id(current_player.tile_id)
@@ -139,7 +139,7 @@ func show_available_position() -> void:
 			av_pos += 1
 			
 	if av_pos == 0 and not score["p1"] + score["p2"] >= max_score:
-		players.change_turn()
+		current_player = players.get_other()
 
 
 func check_isolated_area(prep_mode = false) -> void:
@@ -156,7 +156,8 @@ func check_isolated_area(prep_mode = false) -> void:
 			
 			flood_fill.set_start_pos(Vector2(x, y))
 			
-			var results = flood_fill.check_map(current_player.tile_id, 1-current_player.tile_id)
+			var enemy = players.get_other()
+			var results = flood_fill.check_map(current_player.tile_id, enemy.tile_id)
 			var success = results[0]
 			var history = results[1]
 			
