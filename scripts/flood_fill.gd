@@ -1,6 +1,12 @@
 extends Node
 class_name FloodFill
 
+# ALL OF THIS IS LEGACY CODE
+# TRUTH BE TOLD
+# I'M AFRAID TO CHANGE IT AS IT WORKS
+# HOPEFULLY I WON'T NEED TO EVER TOUCH IT AGAIN
+# THIS IS A NOTE FOR FUTURE ME TO MOCK ME WITH
+
 var borders: Rect2
 var position: Vector2
 
