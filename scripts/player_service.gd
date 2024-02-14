@@ -10,8 +10,8 @@ var current: int
 var rand_gen: RandomNumberGenerator
 
 func _ready():
-	var player1 = Player.new("Player1", 0, player_1_col)
-	var player2 = Player.new("Player2", 1, player_2_col)
+	var player1 = Player.new("Joueur 1", 0, player_1_col)
+	var player2 = Player.new("Joueur 2", 1, player_2_col)
 	
 	rand_gen = RandomNumberGenerator.new()
 	rand_gen.randomize()

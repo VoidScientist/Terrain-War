@@ -56,7 +56,6 @@ func _physics_process(delta) -> void:
 		check_isolated_area()
 		
 		current_player = players.change_turn()
-		print(current_player.tile_id)
 		
 		if players.game_finished(max_score):
 			emit_signal("game_ended", players.get_winner())
