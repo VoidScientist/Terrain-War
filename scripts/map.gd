@@ -22,6 +22,8 @@ var ownerless_tiles := [-1, 3]
 
 
 func _ready() -> void:
+	connect("game_ended", win_band,"_on_TileMap_game_ended")
+	
 	map = get_used_rect()
 	
 	current_player = players.randomize_turn()
