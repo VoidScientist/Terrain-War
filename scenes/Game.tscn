@@ -24,8 +24,8 @@ script = ExtResource( 1 )
 
 [node name="PlayerService" type="Node2D" parent="."]
 script = ExtResource( 6 )
-player_1_col = Color( 0.34902, 0.545098, 0.8, 1 )
-player_2_col = Color( 0.780392, 0.392157, 0.392157, 1 )
+player_1_col = Color( 0.0745098, 0.313726, 0.356863, 1 )
+player_2_col = Color( 0.568627, 0.184314, 0.25098, 1 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
