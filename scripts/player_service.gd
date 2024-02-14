@@ -26,7 +26,6 @@ func change_turn():
 	current = (current+1)%2
 	return players[current]
 	
-	
 func get_other():
 	var other = (current+1)%2
 	return players[other]

@@ -10,7 +10,6 @@ onready var players: PlayerService = $PlayerService
 
 const DIRECTIONS := [Vector2.UP, Vector2.DOWN, Vector2.RIGHT, Vector2.LEFT, Vector2(1,1), Vector2(1,-1), Vector2(-1,-1), Vector2(-1,1)]
 
-var mouse_pos: Vector2
 var flood_fill: FloodFill
 var map: Rect2
 
@@ -34,7 +33,7 @@ func _ready() -> void:
 	
 	camera.focus_on_area(get_used_rect(), cell_size)
 	
-	# apparently this line is for setting up map
+	# fills blocked area
 	check_isolated_area(true)
 	
 	max_score = get_max_score()
@@ -43,13 +42,15 @@ func _ready() -> void:
 
 
 func _physics_process(delta) -> void:
-	mouse_pos = get_global_mouse_position()
+	var clicked = world_to_map(get_global_mouse_position())
 	
-	var cell_claimable = is_cell_empty(mouse_pos) and ally_cell_adj(mouse_pos)
+	var is_empty = get_cellv(clicked) in ownerless_tiles
+	
+	var cell_claimable = is_empty and ally_cell_adj(clicked)
 	
 	if Input.is_action_just_pressed("claim") and cell_claimable:
 		
-		claim_cell(mouse_pos)
+		set_cellv(clicked, current_player.tile_id)
 		
 		current_player.score += 1
 
@@ -78,7 +79,7 @@ func get_max_score() -> int:
 
 
 func update_ui() -> void:
-	show_available_position()
+	update_available()
 	
 	VisualServer.set_default_clear_color(current_player.color)
 	
@@ -87,23 +88,12 @@ func update_ui() -> void:
 	score_bar.get_texture().set_gradient(gradient)
 	
 
-func claim_cell(mouse_pos) -> void:
-	var target_cell = world_to_map(mouse_pos)
-	
-	set_cellv(target_cell, current_player.tile_id)
-	
-	
-func is_cell_empty(mouse_pos) -> bool:
-	return get_cellv(world_to_map(mouse_pos)) in ownerless_tiles
-
-
-func ally_cell_adj(mouse_pos) -> bool:
-	var target_cell = world_to_map(mouse_pos)
+func ally_cell_adj(clicked) -> bool:
 	var current_player_id = current_player.tile_id
 
 	for dir in DIRECTIONS:
 		
-		var adj_cell = target_cell + dir
+		var adj_cell = clicked + dir
 		
 		if get_cellv(adj_cell) == current_player_id: 
 			
@@ -112,7 +102,7 @@ func ally_cell_adj(mouse_pos) -> bool:
 	return false
 	
 
-func show_available_position() -> void:
+func update_available() -> void:
 	var old_av_pos = get_used_cells_by_id(3)
 	
 	for old_pos in old_av_pos:
