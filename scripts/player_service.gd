@@ -35,10 +35,10 @@ func get_players() -> Array:
 
 func get_players_gradient(max_score) -> Gradient:
 	var new_gradient = Gradient.new()
-	var color_1_range = (players[0].score - players[1].score) / float(max_score)
+	var color_range = (players[0].score - players[1].score) / float(max_score)
 	
 	new_gradient.colors = PoolColorArray([players[0].color, players[1].color])
-	new_gradient.offsets = PoolRealArray([color_1_range, 0.5 + color_1_range])
+	new_gradient.offsets = PoolRealArray([color_range, 0.5 + color_range])
 	new_gradient.set_interpolation_mode(new_gradient.GRADIENT_INTERPOLATE_CONSTANT)
 	
 	return new_gradient

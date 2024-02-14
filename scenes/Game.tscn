@@ -122,5 +122,3 @@ bbcode_enabled = true
 bbcode_text = "[center]Les bleus ont gagné !"
 text = "Les bleus ont gagné !"
 fit_content_height = true
-
-[connection signal="game_ended" from="." to="UI/UI_container/win_band" method="_on_TileMap_game_ended"]
