@@ -1,6 +1,9 @@
 extends Node2D
 class_name PlayerService
 
+export (String) var player_1_name
+export (String) var player_2_name
+
 export (Color) var player_1_col
 export (Color) var player_2_col
 
@@ -10,8 +13,8 @@ var current: int
 var rand_gen: RandomNumberGenerator
 
 func _ready():
-	var player1 = Player.new("Joueur 1", 0, player_1_col)
-	var player2 = Player.new("Joueur 2", 1, player_2_col)
+	var player1 = Player.new(player_1_name, 0, player_1_col)
+	var player2 = Player.new(player_2_name, 1, player_2_col)
 	
 	rand_gen = RandomNumberGenerator.new()
 	rand_gen.randomize()

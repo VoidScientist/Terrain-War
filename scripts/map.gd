@@ -128,6 +128,7 @@ func update_available() -> void:
 			av_pos += 1
 			
 	if av_pos == 0 and not players.game_finished(max_score):
+		
 		current_player = players.change_turn()
 
 
