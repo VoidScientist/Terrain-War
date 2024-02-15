@@ -3,12 +3,12 @@ class_name Map
 
 signal game_ended(winner)
 
+const DIRECTIONS := [Vector2.UP, Vector2.DOWN, Vector2.RIGHT, Vector2.LEFT, Vector2(1,1), Vector2(1,-1), Vector2(-1,-1), Vector2(-1,1)]
+
 onready var camera: Camera2D = $Camera2D
 onready var score_bar: TextureRect = $UI/UI_container/progress_bar
 onready var win_band: Control = $UI/UI_container/win_band
 onready var players: PlayerService = $PlayerService
-
-const DIRECTIONS := [Vector2.UP, Vector2.DOWN, Vector2.RIGHT, Vector2.LEFT, Vector2(1,1), Vector2(1,-1), Vector2(-1,-1), Vector2(-1,1)]
 
 var flood_fill: FloodFill
 var map: Rect2
@@ -56,7 +56,7 @@ func _physics_process(delta) -> void:
 		set_cellv(clicked, current_player.tile_id)
 		
 		current_player.score += 1
-
+		
 		check_isolated_area()
 		
 		current_player = players.change_turn()
