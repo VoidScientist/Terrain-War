@@ -13,7 +13,6 @@ onready var players: PlayerService = $PlayerService
 var flood_fill: FloodFill
 var map: Rect2
 
-var score: Dictionary = {"p1": 1, "p2": 1}
 var max_score: int = 2
 
 var current_player: Player
@@ -128,7 +127,7 @@ func update_available() -> void:
 			
 			av_pos += 1
 			
-	if av_pos == 0 and not score["p1"] + score["p2"] >= max_score:
+	if av_pos == 0 and not players.game_finished(max_score):
 		current_player = players.change_turn()
 
 
