@@ -20,6 +20,12 @@ func _ready():
 
 	players = [player1, player2]
 
+func change_name(player_id, new_name):
+	players[player_id].name = new_name
+
+func change_color(player_id, new_color):
+	players[player_id].color = new_color
+
 func randomize_turn() -> Player:
 	current = rand_gen.randi_range(0,1)
 	return players[current]

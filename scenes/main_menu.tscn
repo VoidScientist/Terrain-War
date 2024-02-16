@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://fonts/Josefin - 30.tres" type="DynamicFont" id=1]
 [ext_resource path="res://fonts/Josefin - 20.tres" type="DynamicFont" id=2]
@@ -11,6 +11,35 @@ content_margin_left = 10.0
 [sub_resource type="StyleBoxFlat" id=2]
 
 [sub_resource type="Theme" id=3]
+
+[sub_resource type="StyleBoxFlat" id=4]
+
+[sub_resource type="Animation" id=5]
+resource_name = "fade"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate:a")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 1.0, 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray(  ),
+"transitions": PoolRealArray(  ),
+"update": 1,
+"values": [  ]
+}
 
 [node name="main_menu" type="Control"]
 anchor_right = 1.0
@@ -136,5 +165,95 @@ bbcode_text = "[center]TERRAIN WAR[center]"
 text = "TERRAIN WAR"
 scroll_active = false
 
+[node name="PLAYMENU" type="Control" parent="."]
+visible = false
+modulate = Color( 1, 1, 1, 0 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="black_shade" type="ColorRect" parent="PLAYMENU"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.470588 )
+
+[node name="Control" type="Control" parent="PLAYMENU"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -340.0
+margin_top = -155.0
+margin_right = 340.0
+margin_bottom = 155.0
+
+[node name="parameters" type="VBoxContainer" parent="PLAYMENU/Control"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -321.0
+margin_top = -134.5
+margin_right = 179.0
+margin_bottom = 138.5
+rect_min_size = Vector2( 500, 273 )
+custom_constants/separation = 50
+
+[node name="player1" type="LineEdit" parent="PLAYMENU/Control/parameters"]
+margin_right = 500.0
+margin_bottom = 61.0
+custom_fonts/font = ExtResource( 2 )
+placeholder_text = "Player 1 Name"
+
+[node name="player2" type="LineEdit" parent="PLAYMENU/Control/parameters"]
+margin_top = 111.0
+margin_right = 500.0
+margin_bottom = 172.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = ExtResource( 2 )
+placeholder_text = "Player 2 Name"
+
+[node name="start_game" type="Button" parent="PLAYMENU/Control/parameters"]
+margin_top = 222.0
+margin_right = 500.0
+margin_bottom = 273.0
+custom_fonts/font = ExtResource( 2 )
+custom_styles/hover = SubResource( 4 )
+custom_styles/normal = SubResource( 2 )
+text = "PLAY"
+flat = true
+
+[node name="back_button" type="Button" parent="PLAYMENU/Control/parameters"]
+margin_top = 323.0
+margin_right = 500.0
+margin_bottom = 374.0
+custom_fonts/font = ExtResource( 2 )
+custom_styles/hover = SubResource( 4 )
+custom_styles/normal = SubResource( 2 )
+text = "BACK"
+flat = true
+
+[node name="player1_picker" type="ColorPickerButton" parent="PLAYMENU/Control"]
+margin_left = 543.0
+margin_top = 21.0
+margin_right = 664.0
+margin_bottom = 86.0
+rect_pivot_offset = Vector2( 98, 33 )
+color = Color( 0.752941, 0.211765, 0.211765, 1 )
+edit_alpha = false
+
+[node name="player2_picker" type="ColorPickerButton" parent="PLAYMENU/Control"]
+margin_left = 543.0
+margin_top = 132.0
+margin_right = 664.0
+margin_bottom = 197.0
+rect_pivot_offset = Vector2( 98, 33 )
+color = Color( 0.321569, 0.219608, 0.635294, 1 )
+edit_alpha = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="PLAYMENU"]
+anims/fade = SubResource( 5 )
+
 [connection signal="pressed" from="MAINPART/buttons/VBoxContainer/play_button" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="MAINPART/buttons/VBoxContainer/leave_game" to="." method="_on_leave_game_pressed"]
+[connection signal="pressed" from="PLAYMENU/Control/parameters/start_game" to="." method="_on_start_game_pressed"]
+[connection signal="pressed" from="PLAYMENU/Control/parameters/back_button" to="." method="_on_back_button_pressed"]
