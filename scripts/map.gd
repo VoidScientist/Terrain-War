@@ -65,9 +65,9 @@ func _physics_process(delta) -> void:
 		if players.game_finished(max_score):
 			emit_signal("game_ended", players.get_winner())
 			
-			players.reset_scores()
-			
 			update_ui()
+			
+			players.reset_scores()
 			
 			# TODO: THIS IS A WAY TO DO IT, BUT QUITE BAD
 			# SO MAKE IT BETTER WITH BUTTONS MAYBE?
