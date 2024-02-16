@@ -39,6 +39,8 @@ func _ready() -> void:
 	check_isolated_area(true)
 	
 	max_score = get_max_score()
+	
+	print(max_score)
 		
 	update_ui()
 
@@ -64,6 +66,8 @@ func _physics_process(delta) -> void:
 			emit_signal("game_ended", players.get_winner())
 			
 			players.reset_scores()
+			
+			update_ui()
 			
 			# TODO: THIS IS A WAY TO DO IT, BUT QUITE BAD
 			# SO MAKE IT BETTER WITH BUTTONS MAYBE?

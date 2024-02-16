@@ -42,22 +42,29 @@ func get_players() -> Array:
 	return players
 
 func get_players_gradient(max_score) -> Gradient:
+	var color_range = 0.5
+	
 	var new_gradient = Gradient.new()
-	var color_range = (players[0].score - players[1].score) / float(max_score)
+	
+	var total_score = (players[0].score + players[1].score) + 2
+	
+	if total_score != 0:
+		color_range = (players[0].score + 1) / float(total_score)
 	
 	new_gradient.colors = PoolColorArray([players[0].color, players[1].color])
-	new_gradient.offsets = PoolRealArray([color_range, 0.5 + color_range])
+	new_gradient.offsets = PoolRealArray([0, color_range])
 	new_gradient.set_interpolation_mode(new_gradient.GRADIENT_INTERPOLATE_CONSTANT)
 	
 	return new_gradient
 	
 func reset_scores():
-	for player in players: player.score = 0
+	for player in players: player.score = Player.BASE_SCORE
 	
 func game_finished(max_score) -> bool:
 	return players[0].score + players[1].score >= max_score
 
 func get_winner() -> Player:
+	
 	if players[0].score == players[1].score:
 		return null
 		
