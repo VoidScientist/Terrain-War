@@ -19,10 +19,8 @@ func _on_start_game_pressed():
 	if name2:
 		PlayerService.change_name(1, name2)
 		
-	if col1:
-		PlayerService.change_color(0, col1)
-	if col2:
-		PlayerService.change_color(1, col2)
+	PlayerService.change_color(0, col1)
+	PlayerService.change_color(1, col2)
 
 	get_tree().change_scene("res://scenes/Game.tscn")
 

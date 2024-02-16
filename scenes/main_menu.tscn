@@ -166,8 +166,6 @@ text = "TERRAIN WAR"
 scroll_active = false
 
 [node name="PLAYMENU" type="Control" parent="."]
-visible = false
-modulate = Color( 1, 1, 1, 0 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 
@@ -238,7 +236,7 @@ margin_top = 21.0
 margin_right = 664.0
 margin_bottom = 86.0
 rect_pivot_offset = Vector2( 98, 33 )
-color = Color( 0.752941, 0.211765, 0.211765, 1 )
+color = Color( 0.607843, 0.235294, 0.235294, 1 )
 edit_alpha = false
 
 [node name="player2_picker" type="ColorPickerButton" parent="PLAYMENU/Control"]
@@ -247,7 +245,7 @@ margin_top = 132.0
 margin_right = 664.0
 margin_bottom = 197.0
 rect_pivot_offset = Vector2( 98, 33 )
-color = Color( 0.321569, 0.219608, 0.635294, 1 )
+color = Color( 0.262745, 0.529412, 0.65098, 1 )
 edit_alpha = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="PLAYMENU"]
