@@ -13,7 +13,7 @@ onready var players := PlayerService
 var flood_fill: FloodFill
 var map: Rect2
 
-var max_score: int = 2
+var max_score: int = 0
 
 var current_player: Player
 
@@ -39,7 +39,7 @@ func _ready() -> void:
 	check_isolated_area(true)
 	
 	max_score = get_max_score()
-	
+		
 	update_ui()
 
 
@@ -62,6 +62,8 @@ func _physics_process(delta) -> void:
 		
 		if players.game_finished(max_score):
 			emit_signal("game_ended", players.get_winner())
+			
+			players.reset_scores()
 			
 			# TODO: THIS IS A WAY TO DO IT, BUT QUITE BAD
 			# SO MAKE IT BETTER WITH BUTTONS MAYBE?
