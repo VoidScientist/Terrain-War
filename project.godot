@@ -39,7 +39,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Terrain War"
-run/main_scene="res://scenes/Game.tscn"
+run/main_scene="res://scenes/main_menu.tscn"
 
 [display]
 

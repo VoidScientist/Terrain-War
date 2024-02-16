@@ -62,6 +62,10 @@ func _physics_process(delta) -> void:
 		
 		if players.game_finished(max_score):
 			emit_signal("game_ended", players.get_winner())
+			
+			yield(get_tree().create_timer(5), "timeout")
+			
+			get_tree().change_scene("res://scenes/main_menu.tscn")
 		
 		update_ui()
 

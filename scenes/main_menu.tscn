@@ -1,10 +1,46 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://fonts/Josefin - 30.tres" type="DynamicFont" id=1]
+[ext_resource path="res://fonts/Josefin - 20.tres" type="DynamicFont" id=2]
+[ext_resource path="res://import/player tile.png" type="Texture" id=3]
+[ext_resource path="res://scripts/menu_handler.gd" type="Script" id=4]
+
+[sub_resource type="StyleBoxFlat" id=1]
+content_margin_left = 10.0
+
+[sub_resource type="StyleBoxFlat" id=2]
+
+[sub_resource type="Theme" id=3]
 
 [node name="main_menu" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+script = ExtResource( 4 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.65098, 0, 0.403922, 1 )
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+position = Vector2( 975, -68 )
+amount = 30
+lifetime = 5.0
+texture = ExtResource( 3 )
+emission_shape = 2
+emission_rect_extents = Vector2( 1080, 1 )
+direction = Vector2( 0, 1 )
+initial_velocity = 229.36
+angular_velocity = 5.0
+angle_random = 1.0
+color = Color( 0.184314, 0.611765, 0.584314, 1 )
+hue_variation = 0.13
+hue_variation_random = 1.0
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.337255 )
 
 [node name="buttons" type="Control" parent="."]
 anchor_top = 0.5
@@ -25,46 +61,81 @@ custom_constants/separation = 75
 
 [node name="play_button" type="Button" parent="buttons/VBoxContainer"]
 margin_right = 530.0
-margin_bottom = 86.0
+margin_bottom = 70.0
 rect_min_size = Vector2( 0, 70 )
-custom_fonts/font = ExtResource( 1 )
+focus_mode = 0
+custom_colors/font_color_hover = Color( 0.564706, 0.552941, 0.670588, 1 )
+custom_colors/font_color_pressed = Color( 0.239216, 0.239216, 0.239216, 1 )
+custom_fonts/font = ExtResource( 2 )
+custom_styles/hover = SubResource( 1 )
+custom_styles/normal = SubResource( 2 )
+enabled_focus_mode = 0
 text = "PLAY"
 flat = true
 align = 0
 icon_align = 1
 
-[node name="create_button" type="Button" parent="buttons/VBoxContainer"]
-margin_top = 161.0
+[node name="skin_button" type="Button" parent="buttons/VBoxContainer"]
+margin_top = 145.0
 margin_right = 530.0
-margin_bottom = 247.0
+margin_bottom = 215.0
 rect_min_size = Vector2( 0, 70 )
-custom_fonts/font = ExtResource( 1 )
+focus_mode = 0
+custom_colors/font_color_hover = Color( 0.564706, 0.552941, 0.670588, 1 )
+custom_colors/font_color_pressed = Color( 0.239216, 0.239216, 0.239216, 1 )
+custom_fonts/font = ExtResource( 2 )
+custom_styles/hover = SubResource( 1 )
+custom_styles/normal = SubResource( 2 )
+enabled_focus_mode = 0
+text = "SKINS"
+flat = true
+align = 0
+icon_align = 1
+
+[node name="create_button" type="Button" parent="buttons/VBoxContainer"]
+margin_top = 290.0
+margin_right = 530.0
+margin_bottom = 360.0
+rect_min_size = Vector2( 0, 70 )
+focus_mode = 0
+custom_colors/font_color_hover = Color( 0.564706, 0.552941, 0.670588, 1 )
+custom_colors/font_color_pressed = Color( 0.239216, 0.239216, 0.239216, 1 )
+custom_fonts/font = ExtResource( 2 )
+custom_styles/hover = SubResource( 1 )
+custom_styles/normal = SubResource( 2 )
+enabled_focus_mode = 0
 text = "CREATE MAP"
 flat = true
 align = 0
 
 [node name="leave_game" type="Button" parent="buttons/VBoxContainer"]
-margin_top = 322.0
+margin_top = 435.0
 margin_right = 530.0
-margin_bottom = 408.0
+margin_bottom = 505.0
 rect_min_size = Vector2( 0, 70 )
-custom_fonts/font = ExtResource( 1 )
+focus_mode = 0
+theme = SubResource( 3 )
+custom_colors/font_color_hover = Color( 0.564706, 0.552941, 0.670588, 1 )
+custom_colors/font_color_pressed = Color( 0.239216, 0.239216, 0.239216, 1 )
+custom_fonts/font = ExtResource( 2 )
+custom_styles/hover = SubResource( 1 )
+custom_styles/normal = SubResource( 2 )
+enabled_focus_mode = 0
 text = "LEAVE"
 flat = true
 align = 0
 
 [node name="game_name" type="RichTextLabel" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -579.5
-margin_top = -463.0
-margin_right = 579.5
-margin_bottom = -363.0
+anchor_right = 1.0
+margin_top = 55.0
+margin_bottom = 155.0
 rect_min_size = Vector2( 0, 100 )
+custom_colors/default_color = Color( 1, 1, 1, 1 )
 custom_fonts/normal_font = ExtResource( 1 )
 bbcode_enabled = true
 bbcode_text = "[center]TERRAIN WAR[center]"
 text = "TERRAIN WAR"
 scroll_active = false
+
+[connection signal="pressed" from="buttons/VBoxContainer/play_button" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="buttons/VBoxContainer/leave_game" to="." method="_on_leave_game_pressed"]
