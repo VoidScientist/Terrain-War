@@ -23,23 +23,21 @@ _global_script_classes=[ {
 "class": "Player",
 "language": "GDScript",
 "path": "res://scripts/player_struct.gd"
-}, {
-"base": "Node2D",
-"class": "PlayerService",
-"language": "GDScript",
-"path": "res://scripts/player_service.gd"
 } ]
 _global_script_class_icons={
 "FloodFill": "",
 "Map": "",
-"Player": "",
-"PlayerService": ""
+"Player": ""
 }
 
 [application]
 
 config/name="Terrain War"
 run/main_scene="res://scenes/main_menu.tscn"
+
+[autoload]
+
+PlayerService="*res://scripts/player_service.gd"
 
 [display]
 

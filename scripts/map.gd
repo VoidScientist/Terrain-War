@@ -8,7 +8,7 @@ const DIRECTIONS := [Vector2.UP, Vector2.DOWN, Vector2.RIGHT, Vector2.LEFT, Vect
 onready var camera: Camera2D = $Camera2D
 onready var score_bar: TextureRect = $UI/UI_container/progress_bar
 onready var win_band: Control = $UI/UI_container/win_band
-onready var players: PlayerService = $PlayerService
+onready var players := PlayerService
 
 var flood_fill: FloodFill
 var map: Rect2
@@ -62,6 +62,9 @@ func _physics_process(delta) -> void:
 		
 		if players.game_finished(max_score):
 			emit_signal("game_ended", players.get_winner())
+			
+			# TODO: THIS IS A WAY TO DO IT, BUT QUITE BAD
+			# SO MAKE IT BETTER WITH BUTTONS MAYBE?
 			
 			yield(get_tree().create_timer(5), "timeout")
 			

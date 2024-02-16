@@ -1,5 +1,4 @@
 extends Node2D
-class_name PlayerService
 
 export (String) var player_1_name = "Joueur 1"
 export (String) var player_2_name = "Joueur 2"

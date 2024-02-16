@@ -37,12 +37,11 @@ color = Color( 0.184314, 0.611765, 0.584314, 1 )
 hue_variation = 0.13
 hue_variation_random = 1.0
 
-[node name="ColorRect2" type="ColorRect" parent="."]
+[node name="MAINPART" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color( 0, 0, 0, 0.337255 )
 
-[node name="buttons" type="Control" parent="."]
+[node name="buttons" type="Control" parent="MAINPART"]
 anchor_top = 0.5
 anchor_bottom = 0.5
 margin_left = 25.0
@@ -51,7 +50,7 @@ margin_right = 571.0
 margin_bottom = 403.0
 rect_min_size = Vector2( 500, 500 )
 
-[node name="VBoxContainer" type="VBoxContainer" parent="buttons"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MAINPART/buttons"]
 anchor_top = 0.5
 anchor_bottom = 0.5
 margin_top = -204.0
@@ -59,7 +58,7 @@ margin_right = 530.0
 margin_bottom = 204.0
 custom_constants/separation = 75
 
-[node name="play_button" type="Button" parent="buttons/VBoxContainer"]
+[node name="play_button" type="Button" parent="MAINPART/buttons/VBoxContainer"]
 margin_right = 530.0
 margin_bottom = 70.0
 rect_min_size = Vector2( 0, 70 )
@@ -75,7 +74,7 @@ flat = true
 align = 0
 icon_align = 1
 
-[node name="skin_button" type="Button" parent="buttons/VBoxContainer"]
+[node name="skin_button" type="Button" parent="MAINPART/buttons/VBoxContainer"]
 margin_top = 145.0
 margin_right = 530.0
 margin_bottom = 215.0
@@ -92,7 +91,7 @@ flat = true
 align = 0
 icon_align = 1
 
-[node name="create_button" type="Button" parent="buttons/VBoxContainer"]
+[node name="create_button" type="Button" parent="MAINPART/buttons/VBoxContainer"]
 margin_top = 290.0
 margin_right = 530.0
 margin_bottom = 360.0
@@ -108,7 +107,7 @@ text = "CREATE MAP"
 flat = true
 align = 0
 
-[node name="leave_game" type="Button" parent="buttons/VBoxContainer"]
+[node name="leave_game" type="Button" parent="MAINPART/buttons/VBoxContainer"]
 margin_top = 435.0
 margin_right = 530.0
 margin_bottom = 505.0
@@ -125,7 +124,7 @@ text = "LEAVE"
 flat = true
 align = 0
 
-[node name="game_name" type="RichTextLabel" parent="."]
+[node name="game_name" type="RichTextLabel" parent="MAINPART"]
 anchor_right = 1.0
 margin_top = 55.0
 margin_bottom = 155.0
@@ -137,5 +136,5 @@ bbcode_text = "[center]TERRAIN WAR[center]"
 text = "TERRAIN WAR"
 scroll_active = false
 
-[connection signal="pressed" from="buttons/VBoxContainer/play_button" to="." method="_on_play_button_pressed"]
-[connection signal="pressed" from="buttons/VBoxContainer/leave_game" to="." method="_on_leave_game_pressed"]
+[connection signal="pressed" from="MAINPART/buttons/VBoxContainer/play_button" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="MAINPART/buttons/VBoxContainer/leave_game" to="." method="_on_leave_game_pressed"]
