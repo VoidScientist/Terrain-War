@@ -52,6 +52,7 @@ expand_margin_bottom = 2.0
 tile_set = ExtResource( 3 )
 format = 1
 script = ExtResource( 2 )
+width = 8
 
 [node name="FocusingCamera" type="Camera2D" parent="."]
 current = true
@@ -193,7 +194,7 @@ custom_styles/hover = SubResource( 1 )
 custom_styles/normal = SubResource( 2 )
 text = "GOT IT!"
 
-[node name="FileDialog" type="FileDialog" parent="UI"]
+[node name="save_dialog" type="FileDialog" parent="UI"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -207,5 +208,23 @@ window_title = "Save Level"
 access = 1
 filters = PoolStringArray( "*.dat" )
 
+[node name="load_dialog" type="FileDialog" parent="UI"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -250.0
+margin_top = -250.0
+margin_right = 250.0
+margin_bottom = 250.0
+rect_min_size = Vector2( 500, 500 )
+window_title = "Ouvrir un fichier"
+mode = 0
+access = 1
+filters = PoolStringArray( "*.dat" )
+
 [connection signal="pressed" from="UI/tutorial_layer/tutorial_win/understood_button" to="." method="_on_understood_button_pressed"]
-[connection signal="file_selected" from="UI/FileDialog" to="." method="save"]
+[connection signal="file_selected" from="UI/save_dialog" to="." method="save"]
+[connection signal="popup_hide" from="UI/save_dialog" to="." method="disable_ui"]
+[connection signal="file_selected" from="UI/load_dialog" to="." method="load_map"]
+[connection signal="popup_hide" from="UI/load_dialog" to="." method="disable_ui"]

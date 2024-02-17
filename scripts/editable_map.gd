@@ -5,23 +5,23 @@ onready var camera: FocusingCamera = $FocusingCamera
 onready var tutorial_ui: Control = $UI/tutorial_layer
 onready var tile_ui: TextureRect = $UI/tile_display/current_tile
 onready var tile_display: AnimationPlayer = $UI/tile_display/AnimationPlayer
-onready var file_dialog: FileDialog = $UI/FileDialog
+onready var save_dialog: FileDialog = $UI/save_dialog
+onready var load_dialog: FileDialog = $UI/load_dialog
 
 const WALL_TILE := 2
 const LINE_COLOR := Color(0.2,0.2,0.3,0.5)
 const PLACEABLE_CELL_RANGE := 3
 
+export var width: int = 5
+export var height: int = 5
+
 var ui_active: bool = true
 
-var width: int = 5
-var height: int = 5
 var current_cell: int = 0
 
 var play_area := Rect2(0, 0, width + 1, height + 1)
 
 var grid_activated: bool = true
-
-var save_data: Dictionary = {}
 
 func _ready():
 	generate_borders()
@@ -57,25 +57,77 @@ func _physics_process(delta):
 		
 	if Input.is_action_just_pressed("save"):
 		
-		for i in range(PLACEABLE_CELL_RANGE):
-			save_data[i] = get_used_cells_by_id(i)
-
-		save_data["size"] = Vector2(width, height)
-		
-		file_dialog.popup()
+		save_dialog.popup()
 		
 		ui_active = true
 		
+	if Input.is_action_just_pressed("load"):
+		
+		load_dialog.popup()
+		
+		ui_active = true
 		
 func save(f):
 	
+	var save_data = {}
+	
+	save_data["nature"] = "Map"
+	
+	for i in range(PLACEABLE_CELL_RANGE):
+			save_data[i] = get_used_cells_by_id(i)
+
+	save_data["size"] = Vector2(width, height)
+	
 	var file = File.new()
+	
 	file.open(f, File.WRITE)
+	
 	file.store_var(save_data)
+	
+	file.close()
+
+
+func load_map(f):
+	
+	var file = File.new()
+	
+	file.open(f, File.READ)
+	
+	var data = file.get_var(true)
+	
 	file.close()
 	
-	ui_active = false
+	set_map_up(data)
+		
 
+func set_map_up(data: Dictionary):
+	
+	if not data.get("nature", null) == "Map":
+		print("data is not map or unrecognized")
+		return
+	
+	var saved_size = data["size"]
+	
+	width = saved_size.x
+	height = saved_size.y
+	
+	for pos in get_used_cells():
+		set_cellv(pos, -1)
+		
+	generate_borders()
+	
+	for key in data:
+		
+		if not key is int:
+			continue
+		
+		if not key in range(PLACEABLE_CELL_RANGE):
+			continue
+			
+		for pos in data[key]:
+			set_cellv(pos, int(key))
+	
+	camera.focus_on_area(get_used_rect(), cell_size)
 
 func generate_borders():
 	
@@ -124,3 +176,7 @@ func _on_understood_button_pressed():
 	tutorial_ui.visible = false
 	
 	update_tile_ui()
+
+
+func disable_ui():
+	ui_active = false
