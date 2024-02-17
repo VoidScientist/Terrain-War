@@ -128,6 +128,8 @@ func set_map_up(data: Dictionary):
 			set_cellv(pos, int(key))
 	
 	camera.focus_on_area(get_used_rect(), cell_size)
+	
+	play_area := Rect2(0, 0, width + 1, height + 1)
 
 
 func generate_borders():
@@ -180,5 +182,7 @@ func _on_understood_button_pressed():
 
 
 func disable_ui():
+	# temporary solution to prevent placing cell after saving/loading
 	yield(get_tree().create_timer(.2), "timeout")
+	
 	ui_active = false
