@@ -129,7 +129,7 @@ func set_map_up(data: Dictionary):
 	
 	camera.focus_on_area(get_used_rect(), cell_size)
 	
-	play_area := Rect2(0, 0, width + 1, height + 1)
+	play_area = Rect2(0, 0, width + 1, height + 1)
 
 
 func generate_borders():
