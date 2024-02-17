@@ -1,9 +1,25 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://fonts/Josefin - 30.tres" type="DynamicFont" id=1]
 [ext_resource path="res://fonts/Josefin - 20.tres" type="DynamicFont" id=2]
 [ext_resource path="res://import/player tile.png" type="Texture" id=3]
 [ext_resource path="res://scripts/menu_handler.gd" type="Script" id=4]
+[ext_resource path="res://shaders/main_menu_shader.gdshader" type="Shader" id=5]
+
+[sub_resource type="OpenSimplexNoise" id=8]
+seed = 2
+period = 50.2
+persistence = 0.0
+lacunarity = 1.56
+
+[sub_resource type="NoiseTexture" id=9]
+noise = SubResource( 8 )
+noise_offset = Vector2( 47.5902, 0 )
+
+[sub_resource type="ShaderMaterial" id=7]
+shader = ExtResource( 5 )
+shader_param/sep_col = Color( 0.854902, 0.552941, 0.827451, 1 )
+shader_param/clouds = SubResource( 9 )
 
 [sub_resource type="StyleBoxFlat" id=1]
 content_margin_left = 10.0
@@ -47,13 +63,14 @@ anchor_bottom = 1.0
 script = ExtResource( 4 )
 
 [node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource( 7 )
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color( 0.65098, 0, 0.403922, 1 )
+color = Color( 0.603922, 0.172549, 0.592157, 1 )
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="."]
 position = Vector2( 975, -68 )
-amount = 30
+amount = 50
 lifetime = 5.0
 texture = ExtResource( 3 )
 emission_shape = 2
@@ -215,9 +232,11 @@ placeholder_text = "Player 2 Name"
 margin_top = 222.0
 margin_right = 500.0
 margin_bottom = 273.0
+focus_mode = 0
 custom_fonts/font = ExtResource( 2 )
 custom_styles/hover = SubResource( 4 )
 custom_styles/normal = SubResource( 2 )
+enabled_focus_mode = 0
 text = "PLAY"
 flat = true
 
@@ -225,9 +244,11 @@ flat = true
 margin_top = 323.0
 margin_right = 500.0
 margin_bottom = 374.0
+focus_mode = 0
 custom_fonts/font = ExtResource( 2 )
 custom_styles/hover = SubResource( 4 )
 custom_styles/normal = SubResource( 2 )
+enabled_focus_mode = 0
 text = "BACK"
 flat = true
 

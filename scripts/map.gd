@@ -40,8 +40,6 @@ func _ready() -> void:
 	
 	max_score = get_max_score()
 	
-	print(max_score)
-		
 	update_ui()
 
 
