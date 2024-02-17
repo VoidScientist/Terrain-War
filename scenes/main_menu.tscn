@@ -66,7 +66,7 @@ script = ExtResource( 4 )
 material = SubResource( 7 )
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color( 0.603922, 0.172549, 0.592157, 1 )
+color = Color( 0.509804, 0.172549, 0.501961, 1 )
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="."]
 position = Vector2( 975, -68 )

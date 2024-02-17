@@ -1,4 +1,5 @@
 extends Camera2D
+class_name FocusingCamera
 
 func focus_on_area(area: Rect2, cell_size: Vector2) -> void:
 	# overall size of tilemap
