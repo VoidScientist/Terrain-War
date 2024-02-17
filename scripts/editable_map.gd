@@ -129,6 +129,7 @@ func set_map_up(data: Dictionary):
 	
 	camera.focus_on_area(get_used_rect(), cell_size)
 
+
 func generate_borders():
 	
 	for i in range(height + 2):
@@ -179,4 +180,5 @@ func _on_understood_button_pressed():
 
 
 func disable_ui():
+	yield(get_tree().create_timer(.2), "timeout")
 	ui_active = false
