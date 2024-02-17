@@ -64,6 +64,8 @@ func _physics_process(delta):
 		
 		file_dialog.popup()
 		
+		ui_active = true
+		
 		
 func save(f):
 	
@@ -71,6 +73,8 @@ func save(f):
 	file.open(f, File.WRITE)
 	file.store_var(save_data)
 	file.close()
+	
+	ui_active = false
 
 
 func generate_borders():
