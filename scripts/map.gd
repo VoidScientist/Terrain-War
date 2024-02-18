@@ -37,6 +37,9 @@ func _ready() -> void:
 	
 	max_score = get_max_score()
 	
+	if max_score == 0:
+		emit_signal("game_ended", null)
+	
 	update_ui()
 
 
