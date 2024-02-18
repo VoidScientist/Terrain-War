@@ -1,7 +1,7 @@
 extends Node2D
 
-export (String) var player_1_name = "Joueur 1"
-export (String) var player_2_name = "Joueur 2"
+export (String) var player_1_name = "Player 1"
+export (String) var player_2_name = "Player 2"
 
 export (Color) var player_1_col = Color( 0.262745, 0.529412, 0.65098, 1 )
 export (Color) var player_2_col = Color( 0.607843, 0.235294, 0.235294, 1 )
