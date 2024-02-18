@@ -175,3 +175,9 @@ func _on_change_size_button_pressed():
 	generate_borders()
 	
 	ui_active = false
+
+
+func _on_back_pressed():
+	$UI/map_size_edit.visible = false
+	
+	ui_active = false

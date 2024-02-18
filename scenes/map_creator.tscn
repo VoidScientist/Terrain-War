@@ -261,9 +261,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -250.0
-margin_top = -161.5
+margin_top = -190.0
 margin_right = 250.0
-margin_bottom = 161.5
+margin_bottom = 190.0
 rect_min_size = Vector2( 500, 323 )
 
 [node name="ColorRect" type="ColorRect" parent="UI/map_size_edit"]
@@ -275,7 +275,6 @@ color = Color( 0, 0, 0, 0.521569 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 20.0
-margin_bottom = -177.0
 custom_constants/separation = 50
 
 [node name="title" type="RichTextLabel" parent="UI/map_size_edit/size_change_container"]
@@ -333,11 +332,32 @@ rect_min_size = Vector2( 150, 0 )
 custom_fonts/font = ExtResource( 5 )
 
 [node name="change_size_button" type="Button" parent="UI/map_size_edit"]
-margin_top = 286.0
-margin_right = 500.0
-margin_bottom = 323.0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -74.5
+margin_top = 92.0
+margin_right = 74.5
+margin_bottom = 125.0
 custom_fonts/font = ExtResource( 5 )
+custom_styles/hover = SubResource( 1 )
+custom_styles/normal = SubResource( 2 )
 text = "CONFIRM"
+
+[node name="back" type="Button" parent="UI/map_size_edit"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -52.5
+margin_top = 138.0
+margin_right = 52.5
+margin_bottom = 177.0
+custom_fonts/font = ExtResource( 5 )
+custom_styles/hover = SubResource( 1 )
+custom_styles/normal = SubResource( 2 )
+text = "BACK"
 
 [connection signal="pressed" from="UI/tutorial_layer/tutorial_win/understood_button" to="." method="_on_understood_button_pressed"]
 [connection signal="file_selected" from="UI/save_dialog" to="." method="save"]
@@ -345,3 +365,4 @@ text = "CONFIRM"
 [connection signal="file_selected" from="UI/load_dialog" to="." method="load_data"]
 [connection signal="popup_hide" from="UI/load_dialog" to="." method="disable_ui"]
 [connection signal="pressed" from="UI/map_size_edit/change_size_button" to="." method="_on_change_size_button_pressed"]
+[connection signal="pressed" from="UI/map_size_edit/back" to="." method="_on_back_pressed"]
