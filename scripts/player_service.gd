@@ -57,7 +57,7 @@ func get_players_gradient(max_score) -> Gradient:
 	
 	return new_gradient
 	
-func reset_scores():
+func reset_scores() -> void:
 	for player in players: player.score = Player.BASE_SCORE
 	
 func game_finished(max_score) -> bool:

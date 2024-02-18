@@ -11,10 +11,10 @@ func set_text(text):
 func _on_TileMap_game_ended(winner):
 	
 	if winner is Player:
-		set_text(winner.name + " a gagné!")
+		set_text(winner.name + " has won!")
 		$win_label.set("custom_colors/default_color", winner.color)
 	else:
-		set_text("Match nul !")
+		set_text("Draw !")
 		$win_bg.set("custom_colors/default_color", Color.whitesmoke)
 		
 	appear()
