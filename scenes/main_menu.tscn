@@ -285,6 +285,17 @@ edit_alpha = false
 [node name="AnimationPlayer" type="AnimationPlayer" parent="PLAYMENU"]
 anims/fade = SubResource( 5 )
 
+[node name="credits" type="RichTextLabel" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -355.0
+margin_top = -40.0
+custom_fonts/normal_font = ExtResource( 7 )
+text = "Game by @VoidScientist"
+fit_content_height = true
+
 [connection signal="pressed" from="MAINPART/buttons/VBoxContainer/play_button" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="MAINPART/buttons/VBoxContainer/create_button" to="." method="_on_create_button_pressed"]
 [connection signal="pressed" from="MAINPART/buttons/VBoxContainer/leave_game" to="." method="_on_leave_game_pressed"]
