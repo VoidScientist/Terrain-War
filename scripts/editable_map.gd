@@ -1,10 +1,12 @@
-extends TileMap
+extends LoadableMap
 class_name EditableMap
 
 onready var camera: FocusingCamera = $FocusingCamera
 onready var tutorial_ui: Control = $UI/tutorial_layer
 onready var tile_ui: TextureRect = $UI/tile_display/current_tile
 onready var tile_display: AnimationPlayer = $UI/tile_display/AnimationPlayer
+onready var width_container: LineEdit = $UI/map_size_edit/size_change_container/width_select/custom_with
+onready var height_container: LineEdit = $UI/map_size_edit/size_change_container/height_select/custom_height
 onready var save_dialog: FileDialog = $UI/save_dialog
 onready var load_dialog: FileDialog = $UI/load_dialog
 
@@ -12,20 +14,13 @@ const WALL_TILE := 2
 const LINE_COLOR := Color(0.2,0.2,0.3,0.5)
 const PLACEABLE_CELL_RANGE := 3
 
-export var width: int = 5
-export var height: int = 5
-
 var ui_active: bool = true
 
 var current_cell: int = 0
 
-var play_area: Rect2
-
 var grid_activated: bool = true
 
 func _ready():
-	play_area = Rect2(0, 0, width + 1, height + 1)
-	
 	generate_borders()
 	
 	camera.focus_on_area(get_used_rect(), cell_size)
@@ -69,69 +64,27 @@ func _physics_process(delta):
 		
 		ui_active = true
 		
+	if Input.is_action_just_pressed("back_to_menu"):
+		var scene = load("res://scenes/main_menu.tscn").instance()
+			
+		get_tree().root.add_child(scene)
+		get_tree().root.remove_child(self)
+		
+	if Input.is_action_just_pressed("change_size"):
+		$UI/map_size_edit.visible = true
+		
+		ui_active = true
+		
 func save(f):
 	
 	var save_data = {}
-	
-	save_data["nature"] = "Map"
 	
 	for i in range(PLACEABLE_CELL_RANGE):
 			save_data[i] = get_used_cells_by_id(i)
 
 	save_data["size"] = Vector2(width, height)
 	
-	var file = File.new()
-	
-	file.open(f, File.WRITE)
-	
-	file.store_var(save_data)
-	
-	file.close()
-
-
-func load_map(f):
-	
-	var file = File.new()
-	
-	file.open(f, File.READ)
-	
-	var data = file.get_var(true)
-	
-	file.close()
-	
-	set_map_up(data)
-		
-
-func set_map_up(data: Dictionary):
-	
-	if not data.get("nature", null) == "Map":
-		print("data is not map or unrecognized")
-		return
-	
-	var saved_size = data["size"]
-	
-	width = saved_size.x
-	height = saved_size.y
-	
-	for pos in get_used_cells():
-		set_cellv(pos, -1)
-		
-	generate_borders()
-	
-	for key in data:
-		
-		if not key is int:
-			continue
-		
-		if not key in range(PLACEABLE_CELL_RANGE):
-			continue
-			
-		for pos in data[key]:
-			set_cellv(pos, int(key))
-	
-	camera.focus_on_area(get_used_rect(), cell_size)
-	
-	play_area = Rect2(0, 0, width + 1, height + 1)
+	FileService.save_data(f, "MAP", save_data)
 
 
 func generate_borders():
@@ -149,6 +102,9 @@ func generate_borders():
 		
 		set_cellv(pos1, WALL_TILE)
 		set_cellv(pos2, WALL_TILE)
+
+
+# --------------------[UI RELATED FUNCTIONS]-------------------------
 
 
 func _draw():
@@ -174,7 +130,7 @@ func update_tile_ui():
 		tile_display.stop()
 	
 	tile_display.play("display")
-	
+
 
 func _on_understood_button_pressed():
 	ui_active = false
@@ -186,5 +142,29 @@ func _on_understood_button_pressed():
 func disable_ui():
 	# temporary solution to prevent placing cell after saving/loading
 	yield(get_tree().create_timer(.2), "timeout")
+	
+	ui_active = false
+
+
+func _on_change_size_button_pressed():
+	var new_width = width_container.text
+	var new_height = height_container.text
+	
+	if not (new_width.is_valid_integer() and new_height.is_valid_integer()):
+		return
+		
+	width = int(new_width)
+	height = int(new_height)
+	
+	$UI/map_size_edit.visible = false
+	
+	for pos in get_used_cells():
+		set_cellv(pos, -1)
+		
+	update_play_area()
+	
+	camera.focus_on_area(play_area, cell_size)
+		
+	generate_borders()
 	
 	ui_active = false

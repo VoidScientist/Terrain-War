@@ -1,5 +1,5 @@
-extends TileMap
-class_name Map
+extends LoadableMap
+class_name PlayableMap
 
 signal game_ended(winner)
 
@@ -11,7 +11,6 @@ onready var win_band: Control = $UI/UI_container/win_band
 onready var players := PlayerService
 
 var flood_fill: FloodFill
-var map: Rect2
 
 var max_score: int = 0
 
@@ -24,16 +23,14 @@ func _ready() -> void:
 	
 	connect("game_ended", win_band, "_on_TileMap_game_ended")
 	
-	map = get_used_rect()
-	
 	current_player = players.randomize_turn()
 
-	flood_fill = FloodFill.new(map, self)
+	flood_fill = FloodFill.new(play_area, self)
 	
 	for player in players.get_players():
 		tile_set.tile_set_modulate(player.tile_id, player.color)
 	
-	camera.focus_on_area(get_used_rect(), cell_size)
+	camera.focus_on_area(play_area, cell_size)
 	
 	# fills blocked area
 	check_isolated_area(true)
@@ -72,7 +69,10 @@ func _physics_process(delta) -> void:
 			
 			yield(get_tree().create_timer(5), "timeout")
 			
-			get_tree().change_scene("res://scenes/main_menu.tscn")
+			var scene = load("res://scenes/main_menu.tscn").instance()
+			
+			get_tree().root.add_child(scene)
+			get_tree().root.remove_child(self)
 		
 		update_ui()
 
@@ -80,9 +80,9 @@ func _physics_process(delta) -> void:
 func get_max_score() -> int:
 	var res = 0
 	
-	for x in range(map.size.x):
+	for x in range(play_area.size.x):
 		
-		for y in range(map.size.y):
+		for y in range(play_area.size.y):
 			
 			if get_cell(x, y) != -1: continue
 			
@@ -146,9 +146,9 @@ func update_available() -> void:
 func check_isolated_area(prep_mode = false) -> void:
 	var checked_tiles = []
 	
-	for x in range(map.size.x):
+	for x in range(play_area.size.x):
 		
-		for y in range(map.size.y):
+		for y in range(play_area.size.y):
 			
 			var checked = Vector2(x, y) in checked_tiles 
 			var is_player = not get_cell(x, y) in ownerless_tiles

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://scripts/camera_handler.gd" type="Script" id=1]
 [ext_resource path="res://scripts/editable_map.gd" type="Script" id=2]
@@ -6,6 +6,26 @@
 [ext_resource path="res://fonts/Josefin - 20.tres" type="DynamicFont" id=4]
 [ext_resource path="res://fonts/Josefin - 10.tres" type="DynamicFont" id=5]
 [ext_resource path="res://import/JosefinSans-Regular.ttf" type="DynamicFontData" id=6]
+[ext_resource path="res://scripts/file_service.gd" type="Script" id=7]
+
+[sub_resource type="GDScript" id=5]
+script/source = "extends CanvasLayer
+
+
+# Declare member variables here. Examples:
+# var a = 2
+# var b = \"text\"
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+#func _process(delta):
+#	pass
+"
 
 [sub_resource type="Animation" id=3]
 resource_name = "display"
@@ -24,7 +44,7 @@ tracks/0/keys = {
 }
 
 [sub_resource type="DynamicFont" id=4]
-size = 25
+size = 18
 outline_size = 1
 font_data = ExtResource( 6 )
 
@@ -52,13 +72,16 @@ expand_margin_bottom = 2.0
 tile_set = ExtResource( 3 )
 format = 1
 script = ExtResource( 2 )
-width = 8
+
+[node name="FileService" type="Node" parent="."]
+script = ExtResource( 7 )
 
 [node name="FocusingCamera" type="Camera2D" parent="."]
 current = true
 script = ExtResource( 1 )
 
 [node name="UI" type="CanvasLayer" parent="."]
+script = SubResource( 5 )
 
 [node name="tile_display" type="Control" parent="UI"]
 anchor_left = 0.5
@@ -147,6 +170,10 @@ bbcode_text = "[center]PLACE: LMB
 
 DELETE: RMB
 
+MAIN MENU: ESC
+
+CHANGE MAP SIZE: E
+
 CHANGE TILE: TAB
 
 TOGGLE GRID: SHIFT
@@ -157,6 +184,10 @@ LOAD: L"
 text = "PLACE: LMB
 
 DELETE: RMB
+
+MAIN MENU: ESC
+
+CHANGE MAP SIZE: E
 
 CHANGE TILE: TAB
 
@@ -223,8 +254,94 @@ mode = 0
 access = 1
 filters = PoolStringArray( "*.dat" )
 
+[node name="map_size_edit" type="Control" parent="UI"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -250.0
+margin_top = -161.5
+margin_right = 250.0
+margin_bottom = 161.5
+rect_min_size = Vector2( 500, 323 )
+
+[node name="ColorRect" type="ColorRect" parent="UI/map_size_edit"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.521569 )
+
+[node name="size_change_container" type="VBoxContainer" parent="UI/map_size_edit"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 20.0
+margin_bottom = -177.0
+custom_constants/separation = 50
+
+[node name="title" type="RichTextLabel" parent="UI/map_size_edit/size_change_container"]
+modulate = Color( 0.611765, 0.909804, 1, 1 )
+margin_right = 500.0
+margin_bottom = 52.0
+custom_fonts/normal_font = ExtResource( 4 )
+bbcode_enabled = true
+bbcode_text = "[center]CHANGE MAP SIZE"
+text = "CHANGE MAP SIZE"
+fit_content_height = true
+
+[node name="width_select" type="HBoxContainer" parent="UI/map_size_edit/size_change_container"]
+margin_top = 102.0
+margin_right = 500.0
+margin_bottom = 143.0
+alignment = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/map_size_edit/size_change_container/width_select"]
+margin_left = 98.0
+margin_right = 248.0
+margin_bottom = 41.0
+rect_min_size = Vector2( 150, 0 )
+custom_fonts/normal_font = ExtResource( 5 )
+text = "Width:"
+fit_content_height = true
+
+[node name="custom_with" type="LineEdit" parent="UI/map_size_edit/size_change_container/width_select"]
+margin_left = 252.0
+margin_right = 402.0
+margin_bottom = 41.0
+rect_min_size = Vector2( 150, 0 )
+custom_fonts/font = ExtResource( 5 )
+
+[node name="height_select" type="HBoxContainer" parent="UI/map_size_edit/size_change_container"]
+margin_top = 193.0
+margin_right = 500.0
+margin_bottom = 234.0
+alignment = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/map_size_edit/size_change_container/height_select"]
+margin_left = 98.0
+margin_right = 248.0
+margin_bottom = 41.0
+rect_min_size = Vector2( 150, 0 )
+custom_fonts/normal_font = ExtResource( 5 )
+text = "Height:"
+fit_content_height = true
+
+[node name="custom_height" type="LineEdit" parent="UI/map_size_edit/size_change_container/height_select"]
+margin_left = 252.0
+margin_right = 402.0
+margin_bottom = 41.0
+rect_min_size = Vector2( 150, 0 )
+custom_fonts/font = ExtResource( 5 )
+
+[node name="change_size_button" type="Button" parent="UI/map_size_edit"]
+margin_top = 286.0
+margin_right = 500.0
+margin_bottom = 323.0
+custom_fonts/font = ExtResource( 5 )
+text = "CONFIRM"
+
 [connection signal="pressed" from="UI/tutorial_layer/tutorial_win/understood_button" to="." method="_on_understood_button_pressed"]
 [connection signal="file_selected" from="UI/save_dialog" to="." method="save"]
 [connection signal="popup_hide" from="UI/save_dialog" to="." method="disable_ui"]
-[connection signal="file_selected" from="UI/load_dialog" to="." method="load_map"]
+[connection signal="file_selected" from="UI/load_dialog" to="." method="set_map_up"]
 [connection signal="popup_hide" from="UI/load_dialog" to="." method="disable_ui"]
+[connection signal="pressed" from="UI/map_size_edit/change_size_button" to="." method="_on_change_size_button_pressed"]
