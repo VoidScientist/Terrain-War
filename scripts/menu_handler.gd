@@ -34,6 +34,9 @@ func _on_start_game_pressed():
 	var item = map_selection.get_selected_items()[0]
 	var file_name = map_selection.get_item_text(item)
 	
+	if not file_name:
+		return
+	
 	scene.load_map("user://" + file_name)
 	
 	get_tree().root.add_child(scene)
