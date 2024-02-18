@@ -342,6 +342,6 @@ text = "CONFIRM"
 [connection signal="pressed" from="UI/tutorial_layer/tutorial_win/understood_button" to="." method="_on_understood_button_pressed"]
 [connection signal="file_selected" from="UI/save_dialog" to="." method="save"]
 [connection signal="popup_hide" from="UI/save_dialog" to="." method="disable_ui"]
-[connection signal="file_selected" from="UI/load_dialog" to="." method="set_map_up"]
+[connection signal="file_selected" from="UI/load_dialog" to="." method="load_data"]
 [connection signal="popup_hide" from="UI/load_dialog" to="." method="disable_ui"]
 [connection signal="pressed" from="UI/map_size_edit/change_size_button" to="." method="_on_change_size_button_pressed"]

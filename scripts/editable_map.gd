@@ -139,6 +139,13 @@ func _on_understood_button_pressed():
 	update_tile_ui()
 
 
+func load_data(f):
+	
+	load_map(f)
+	
+	camera.focus_on_area(play_area, cell_size)
+
+
 func disable_ui():
 	# temporary solution to prevent placing cell after saving/loading
 	yield(get_tree().create_timer(.2), "timeout")
