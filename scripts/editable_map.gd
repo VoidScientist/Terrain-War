@@ -19,17 +19,19 @@ var ui_active: bool = true
 
 var current_cell: int = 0
 
-var play_area := Rect2(0, 0, width + 1, height + 1)
+var play_area: Rect2
 
 var grid_activated: bool = true
 
 func _ready():
+	play_area = Rect2(0, 0, width + 1, height + 1)
+	
 	generate_borders()
 	
 	camera.focus_on_area(get_used_rect(), cell_size)
 	
 	tutorial_ui.visible = true 
-
+	
 
 func _physics_process(delta):
 	if ui_active: return
