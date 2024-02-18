@@ -123,6 +123,7 @@ align = 0
 icon_align = 1
 
 [node name="skin_button" type="Button" parent="MAINPART/buttons/VBoxContainer"]
+visible = false
 margin_top = 145.0
 margin_right = 530.0
 margin_bottom = 215.0
@@ -140,9 +141,9 @@ align = 0
 icon_align = 1
 
 [node name="create_button" type="Button" parent="MAINPART/buttons/VBoxContainer"]
-margin_top = 290.0
+margin_top = 145.0
 margin_right = 530.0
-margin_bottom = 360.0
+margin_bottom = 215.0
 rect_min_size = Vector2( 0, 70 )
 focus_mode = 0
 custom_colors/font_color_hover = Color( 0.564706, 0.552941, 0.670588, 1 )
@@ -156,9 +157,9 @@ flat = true
 align = 0
 
 [node name="leave_game" type="Button" parent="MAINPART/buttons/VBoxContainer"]
-margin_top = 435.0
+margin_top = 290.0
 margin_right = 530.0
-margin_bottom = 505.0
+margin_bottom = 360.0
 rect_min_size = Vector2( 0, 70 )
 focus_mode = 0
 theme = SubResource( 3 )
