@@ -37,10 +37,10 @@ func _ready() -> void:
 			face_map.tile_set.tile_set_modulate(half_count_faces * player.tile_id + face, player.color)
 			
 	for cell in get_used_cells_by_id(0):
-		face_map.set_cellv(cell, rand_range(0,4))
+		face_map.set_cellv(cell, rand_range(0,half_count_faces))
 		
 	for cell in get_used_cells_by_id(1):
-		face_map.set_cellv(cell, rand_range(4,8))
+		face_map.set_cellv(cell, rand_range(half_count_faces,2*half_count_faces))
 	
 	camera.focus_on_area(play_area, cell_size)
 	
