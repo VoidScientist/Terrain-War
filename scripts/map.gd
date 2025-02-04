@@ -8,7 +8,11 @@ const DIRECTIONS := [Vector2.UP, Vector2.DOWN, Vector2.RIGHT, Vector2.LEFT, Vect
 onready var camera: Camera2D = $Camera2D
 onready var score_bar: TextureRect = $UI/UI_container/progress_bar
 onready var win_band: Control = $UI/UI_container/win_band
+onready var face_map: TileMap = $face_map
 onready var players := PlayerService
+
+onready var half_count_faces: int = len(face_map.tile_set.get_tiles_ids()) / 2
+
 
 var flood_fill: FloodFill
 
@@ -29,6 +33,14 @@ func _ready() -> void:
 	
 	for player in players.get_players():
 		tile_set.tile_set_modulate(player.tile_id, player.color)
+		for face in range(half_count_faces):
+			face_map.tile_set.tile_set_modulate(half_count_faces * player.tile_id + face, player.color)
+			
+	for cell in get_used_cells_by_id(0):
+		face_map.set_cellv(cell, rand_range(0,4))
+		
+	for cell in get_used_cells_by_id(1):
+		face_map.set_cellv(cell, rand_range(4,8))
 	
 	camera.focus_on_area(play_area, cell_size)
 	
@@ -52,7 +64,7 @@ func _physics_process(delta) -> void:
 	
 	if Input.is_action_just_pressed("claim") and cell_claimable:
 		
-		set_cellv(clicked, current_player.tile_id)
+		place_cell(clicked, current_player.tile_id)
 		
 		current_player.score += 1
 		
@@ -79,6 +91,10 @@ func _physics_process(delta) -> void:
 		
 		update_ui()
 
+func place_cell(pos, id):
+	set_cellv(pos, id)
+	var face_start = half_count_faces * id
+	face_map.set_cellv(pos, rand_range(face_start, face_start + half_count_faces))
 	
 func get_max_score() -> int:
 	var res = 0
@@ -171,5 +187,6 @@ func check_isolated_area(prep_mode = false) -> void:
 				
 				if not success or prep_mode: continue
 				
-				set_cellv(pos, current_player.tile_id)
+				place_cell(pos, current_player.tile_id)
+				
 				current_player.score += 1
