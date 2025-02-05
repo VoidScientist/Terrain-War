@@ -51,8 +51,26 @@ func _ready() -> void:
 	
 	if max_score == 0:
 		emit_signal("game_ended", null)
+		back_to_main_menu()
+	
 	
 	update_ui()
+
+
+func back_to_main_menu():
+	update_ui()
+			
+	players.reset_scores()
+	
+	# TODO: THIS IS A WAY TO DO IT, BUT QUITE BAD
+	# SO MAKE IT BETTER WITH BUTTONS MAYBE?
+	
+	yield(get_tree().create_timer(5), "timeout")
+	
+	var scene = load("res://scenes/main_menu.tscn").instance()
+	
+	get_tree().root.add_child(scene)
+	get_tree().root.remove_child(self)
 
 
 func _physics_process(delta) -> void:
@@ -75,24 +93,13 @@ func _physics_process(delta) -> void:
 		if players.game_finished(max_score):
 			emit_signal("game_ended", players.get_winner())
 			
-			update_ui()
-			
-			players.reset_scores()
-			
-			# TODO: THIS IS A WAY TO DO IT, BUT QUITE BAD
-			# SO MAKE IT BETTER WITH BUTTONS MAYBE?
-			
-			yield(get_tree().create_timer(5), "timeout")
-			
-			var scene = load("res://scenes/main_menu.tscn").instance()
-			
-			get_tree().root.add_child(scene)
-			get_tree().root.remove_child(self)
+			back_to_main_menu()
 		
 		update_ui()
 
 func place_cell(pos, id):
 	set_cellv(pos, id)
+	
 	var face_start = half_count_faces * id
 	face_map.set_cellv(pos, rand_range(face_start, face_start + half_count_faces))
 	

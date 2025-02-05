@@ -6,7 +6,7 @@ void fragment(){
 	float noise_strength = texture(clouds, UV + TIME / 48.0).g;
 	
 	if (noise_strength > 0.2 && noise_strength < 0.5) {
-		COLOR.a = 0.75;
+		COLOR = sep_col;
 	}
 
 }
