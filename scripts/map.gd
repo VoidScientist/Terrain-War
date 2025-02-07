@@ -59,16 +59,16 @@ func _ready() -> void:
 
 func back_to_main_menu():
 	update_ui()
-			
-	players.reset_scores()
 	
 	# TODO: THIS IS A WAY TO DO IT, BUT QUITE BAD
 	# SO MAKE IT BETTER WITH BUTTONS MAYBE?
 	
 	yield(get_tree().create_timer(5), "timeout")
 	
-	var scene = load("res://scenes/main_menu.tscn").instance()
+	players.reset_scores()
 	
+	var scene = load("res://scenes/main_menu.tscn").instance()
+
 	get_tree().root.add_child(scene)
 	get_tree().root.remove_child(self)
 
