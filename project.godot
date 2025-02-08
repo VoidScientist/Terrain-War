@@ -58,6 +58,7 @@ _global_script_class_icons={
 
 config/name="Terrain War"
 run/main_scene="res://scenes/main_menu.tscn"
+config/icon="res://import/player tile.png"
 
 [autoload]
 
