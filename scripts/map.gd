@@ -7,14 +7,15 @@ const DIRECTIONS := [Vector2.UP, Vector2.DOWN, Vector2.RIGHT, Vector2.LEFT, Vect
 
 export(NodePath) var p1_bar_path
 export(NodePath) var p2_bar_path
+export(NodePath) var win_band_path
 
 onready var camera: Camera2D = $Camera2D
-onready var win_band: Control = $UI/UI_container/win_band
 onready var face_map: TileMap = $face_map
 onready var players := PlayerService
 
 onready var p1_bar: ColorRect = get_node(p1_bar_path)
 onready var p2_bar: ColorRect = get_node(p2_bar_path)
+onready var win_band: Control = get_node(win_band_path)
 
 onready var half_count_faces: int = len(face_map.tile_set.get_tiles_ids()) / 2
 
@@ -31,6 +32,7 @@ var ownerless_tiles := [-1, 3]
 func _ready() -> void:
 	assert(p1_bar)
 	assert(p2_bar)
+	assert(win_band)
 	
 	p1_bar.color = PlayerService.get_players()[0].color
 	p2_bar.color = PlayerService.get_players()[1].color

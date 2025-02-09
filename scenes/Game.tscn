@@ -1,13 +1,14 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://scripts/map.gd" type="Script" id=1]
 [ext_resource path="res://tileset/game_tileset.tres" type="TileSet" id=2]
-[ext_resource path="res://fonts/Josefin - 30.tres" type="DynamicFont" id=3]
+[ext_resource path="res://styles/wind_band_style.tres" type="StyleBox" id=3]
 [ext_resource path="res://scripts/win_band_handler.gd" type="Script" id=4]
 [ext_resource path="res://scripts/camera_handler.gd" type="Script" id=5]
 [ext_resource path="res://scripts/player_service.gd" type="Script" id=6]
 [ext_resource path="res://tileset/faces.tres" type="TileSet" id=7]
 [ext_resource path="res://styles/progress_bar_panel.tres" type="StyleBox" id=8]
+[ext_resource path="res://fonts/Josefin - 20.tres" type="DynamicFont" id=9]
 
 [sub_resource type="StyleBoxEmpty" id=3]
 
@@ -21,6 +22,7 @@ tile_data = PoolIntArray( 0, 2, 0, 1, 2, 0, 2, 2, 0, 3, 2, 0, 4, 2, 0, 5, 2, 0, 
 script = ExtResource( 1 )
 p1_bar_path = NodePath("UI/UI_container/MarginContainer/progress_bar_container/PanelContainer/HBoxContainer/p1")
 p2_bar_path = NodePath("UI/UI_container/MarginContainer/progress_bar_container/PanelContainer/HBoxContainer/p2")
+win_band_path = NodePath("UI/UI_container/VBoxContainer/win_band")
 
 [node name="face_map" type="TileMap" parent="."]
 tile_set = ExtResource( 7 )
@@ -99,6 +101,8 @@ margin_bottom = 50.0
 anchor_left = 0.5
 anchor_right = 0.5
 anchor_bottom = 1.0
+margin_left = -3.5
+margin_right = 3.5
 grow_horizontal = 2
 grow_vertical = 0
 rect_min_size = Vector2( 7, 0 )
@@ -111,45 +115,44 @@ margin_bottom = 50.0
 size_flags_horizontal = 3
 custom_styles/separator = SubResource( 4 )
 
-[node name="win_band" type="Control" parent="UI/UI_container/MarginContainer"]
-modulate = Color( 1, 1, 1, 0 )
-margin_right = 1900.0
-margin_bottom = 1060.0
-rect_min_size = Vector2( 0, 100 )
-script = ExtResource( 4 )
-
-[node name="win_outline" type="ColorRect" parent="UI/UI_container/MarginContainer/win_band"]
-show_behind_parent = true
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -960.0
-margin_top = -60.0
-margin_right = 960.0
-margin_bottom = 60.0
-rect_min_size = Vector2( 1920, 120 )
-color = Color( 0.192157, 0.192157, 0.247059, 1 )
-
-[node name="win_bg" type="ColorRect" parent="UI/UI_container/MarginContainer/win_band"]
-show_behind_parent = true
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/UI_container"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-rect_min_size = Vector2( 1920, 81 )
-color = Color( 0.129412, 0.129412, 0.145098, 1 )
+rect_pivot_offset = Vector2( -299, 147 )
+custom_constants/separation = 0
 
-[node name="win_label" type="RichTextLabel" parent="UI/UI_container/MarginContainer/win_band"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -960.0
-margin_top = -36.0
-margin_right = 960.0
-margin_bottom = 45.0
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_fonts/normal_font = ExtResource( 3 )
-bbcode_enabled = true
-bbcode_text = "[center]Les bleus ont gagné !"
-text = "Les bleus ont gagné !"
-fit_content_height = true
+[node name="empty1" type="Control" parent="UI/UI_container/VBoxContainer"]
+margin_right = 1920.0
+margin_bottom = 490.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 5.0
+
+[node name="win_band" type="PanelContainer" parent="UI/UI_container/VBoxContainer"]
+margin_top = 490.0
+margin_right = 1920.0
+margin_bottom = 589.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="win_label" type="Label" parent="UI/UI_container/VBoxContainer/win_band"]
+margin_top = 15.0
+margin_right = 1920.0
+margin_bottom = 84.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 0 )
+custom_fonts/font = ExtResource( 9 )
+text = "Hello World"
+align = 1
+valign = 1
+
+[node name="empty2" type="Control" parent="UI/UI_container/VBoxContainer"]
+margin_top = 589.0
+margin_right = 1920.0
+margin_bottom = 1080.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 5.0
