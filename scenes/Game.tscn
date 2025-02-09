@@ -89,6 +89,21 @@ margin_bottom = 42.0
 size_flags_horizontal = 3
 color = Color( 0.619608, 0.227451, 0.227451, 1 )
 
+[node name="Control" type="Control" parent="UI/UI_container/MarginContainer/progress_bar_container/PanelContainer"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 1419.0
+margin_bottom = 50.0
+
+[node name="separator" type="ColorRect" parent="UI/UI_container/MarginContainer/progress_bar_container/PanelContainer/Control"]
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+rect_min_size = Vector2( 7, 0 )
+color = Color( 0.0352941, 0.0352941, 0.0745098, 1 )
+
 [node name="rpad" type="VSeparator" parent="UI/UI_container/MarginContainer/progress_bar_container"]
 margin_left = 1663.0
 margin_right = 1900.0
