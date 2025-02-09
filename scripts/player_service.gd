@@ -16,7 +16,7 @@ func _ready():
 	var player2 = Player.new(player_2_name, 1, player_2_col)
 	
 	rand_gen = RandomNumberGenerator.new()
-	rand_gen.randomize()
+	rand_gen.seed = Time.get_unix_time_from_system()
 
 	players = [player1, player2]
 
