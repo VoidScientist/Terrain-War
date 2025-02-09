@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://styles/button_panel_style_main_menu.tres" type="StyleBox" id=1]
 [ext_resource path="res://fonts/Josefin - 20.tres" type="DynamicFont" id=2]
@@ -27,6 +27,8 @@ shader_param/clouds = SubResource( 9 )
 
 [sub_resource type="StreamTexture" id=10]
 load_path = "res://.import/player tile.png-e47d55aa508f7400973e367c20a668aa.stex"
+
+[sub_resource type="StyleBoxFlat" id=12]
 
 [sub_resource type="StyleBoxEmpty" id=11]
 
@@ -110,25 +112,32 @@ margin_bottom = 1050.0
 
 [node name="centered_logo" type="CenterContainer" parent="MAINPART/main_menu_margin/menu_structure"]
 margin_right = 1890.0
-margin_bottom = 186.0
+margin_bottom = 212.0
 
 [node name="name_logo" type="TextureRect" parent="MAINPART/main_menu_margin/menu_structure/centered_logo"]
-margin_left = 699.0
-margin_right = 1190.0
-margin_bottom = 186.0
+margin_left = 663.0
+margin_right = 1227.0
+margin_bottom = 212.0
 texture = ExtResource( 3 )
 
+[node name="PanelContainer" type="PanelContainer" parent="MAINPART/main_menu_margin/menu_structure/centered_logo"]
+margin_left = 945.0
+margin_top = 106.0
+margin_right = 945.0
+margin_bottom = 106.0
+custom_styles/panel = SubResource( 12 )
+
 [node name="sep1" type="HSeparator" parent="MAINPART/main_menu_margin/menu_structure"]
-margin_top = 190.0
+margin_top = 216.0
 margin_right = 1890.0
-margin_bottom = 353.0
+margin_bottom = 374.0
 size_flags_vertical = 3
 custom_styles/separator = SubResource( 11 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MAINPART/main_menu_margin/menu_structure"]
-margin_top = 357.0
+margin_top = 378.0
 margin_right = 1890.0
-margin_bottom = 847.0
+margin_bottom = 852.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 3.0
@@ -136,7 +145,7 @@ size_flags_stretch_ratio = 3.0
 [node name="button_panel" type="PanelContainer" parent="MAINPART/main_menu_margin/menu_structure/HBoxContainer"]
 material = ExtResource( 8 )
 margin_right = 471.0
-margin_bottom = 490.0
+margin_bottom = 474.0
 rect_min_size = Vector2( 400, 400 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -146,7 +155,7 @@ custom_styles/panel = ExtResource( 1 )
 margin_left = 5.0
 margin_top = 5.0
 margin_right = 466.0
-margin_bottom = 485.0
+margin_bottom = 469.0
 custom_constants/margin_right = -15
 custom_constants/margin_left = 15
 custom_constants/margin_bottom = -15
@@ -154,14 +163,14 @@ custom_constants/margin_bottom = -15
 [node name="buttons" type="VBoxContainer" parent="MAINPART/main_menu_margin/menu_structure/HBoxContainer/button_panel/MarginContainer"]
 margin_left = 15.0
 margin_right = 476.0
-margin_bottom = 495.0
+margin_bottom = 479.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 3.0
 
 [node name="play_button" type="Button" parent="MAINPART/main_menu_margin/menu_structure/HBoxContainer/button_panel/MarginContainer/buttons"]
 margin_right = 461.0
-margin_bottom = 120.0
+margin_bottom = 116.0
 rect_min_size = Vector2( 0, 70 )
 focus_mode = 0
 size_flags_vertical = 3
@@ -171,15 +180,15 @@ custom_fonts/font = ExtResource( 2 )
 custom_styles/hover = SubResource( 1 )
 custom_styles/normal = SubResource( 2 )
 enabled_focus_mode = 0
-text = "PLAY"
+text = "LOCAL GAME"
 flat = true
 align = 0
 icon_align = 1
 
 [node name="multiplayer_button" type="Button" parent="MAINPART/main_menu_margin/menu_structure/HBoxContainer/button_panel/MarginContainer/buttons"]
-margin_top = 124.0
+margin_top = 120.0
 margin_right = 461.0
-margin_bottom = 245.0
+margin_bottom = 237.0
 rect_min_size = Vector2( 0, 70 )
 focus_mode = 0
 size_flags_vertical = 3
@@ -195,9 +204,9 @@ align = 0
 icon_align = 1
 
 [node name="create_button" type="Button" parent="MAINPART/main_menu_margin/menu_structure/HBoxContainer/button_panel/MarginContainer/buttons"]
-margin_top = 249.0
+margin_top = 241.0
 margin_right = 461.0
-margin_bottom = 370.0
+margin_bottom = 358.0
 rect_min_size = Vector2( 0, 70 )
 focus_mode = 0
 size_flags_vertical = 3
@@ -212,9 +221,9 @@ flat = true
 align = 0
 
 [node name="leave_game" type="Button" parent="MAINPART/main_menu_margin/menu_structure/HBoxContainer/button_panel/MarginContainer/buttons"]
-margin_top = 374.0
+margin_top = 362.0
 margin_right = 461.0
-margin_bottom = 495.0
+margin_bottom = 479.0
 rect_min_size = Vector2( 0, 70 )
 focus_mode = 0
 size_flags_vertical = 3
@@ -232,12 +241,12 @@ align = 0
 [node name="empty" type="Control" parent="MAINPART/main_menu_margin/menu_structure/HBoxContainer"]
 margin_left = 475.0
 margin_right = 1890.0
-margin_bottom = 490.0
+margin_bottom = 474.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 
 [node name="sep2" type="HSeparator" parent="MAINPART/main_menu_margin/menu_structure"]
-margin_top = 851.0
+margin_top = 856.0
 margin_right = 1890.0
 margin_bottom = 1015.0
 size_flags_vertical = 3
