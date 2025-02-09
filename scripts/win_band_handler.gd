@@ -8,6 +8,7 @@ var win_messages: Array = [
 	]
 
 func _ready():
+	randomize()
 	modulate.a = 0
 
 func appear():
