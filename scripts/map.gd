@@ -38,6 +38,7 @@ func _ready() -> void:
 	p2_bar.color = PlayerService.get_players()[1].color
 
 	connect("game_ended", win_band, "_on_TileMap_game_ended")
+	get_tree().root.connect("size_changed", self, "focus_on_play_area")
 	
 	current_player = players.randomize_turn()
 
@@ -54,7 +55,7 @@ func _ready() -> void:
 	for cell in get_used_cells_by_id(1):
 		face_map.set_cellv(cell, rand_range(half_count_faces,2*half_count_faces))
 	
-	camera.focus_on_area(play_area, cell_size)
+	focus_on_play_area()
 	
 	# fills blocked area
 	check_isolated_area(true)
@@ -65,8 +66,11 @@ func _ready() -> void:
 		emit_signal("game_ended", null)
 		back_to_main_menu()
 	
-	
 	update_ui()
+	
+func focus_on_play_area():
+	
+	camera.focus_on_area(play_area, cell_size)
 
 
 func back_to_main_menu():
