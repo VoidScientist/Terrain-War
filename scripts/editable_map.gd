@@ -23,10 +23,14 @@ var grid_activated: bool = true
 func _ready():
 	generate_borders()
 	
-	camera.focus_on_area(get_used_rect(), cell_size)
+	get_tree().root.connect("size_changed", self, "focus_camera")
+	
+	focus_camera()
 	
 	tutorial_ui.visible = true 
 	
+func focus_camera():
+	camera.focus_on_area(get_used_rect(), cell_size)
 
 func _physics_process(delta):
 	if ui_active: return
