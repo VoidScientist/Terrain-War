@@ -1,0 +1,17 @@
+[gd_resource type="Shader" format=2]
+
+[resource]
+code = "shader_type canvas_item;
+
+uniform float subdivisions: hint_range(0.0,32.0,1.0) = 5.0;
+uniform float colModifier = 1.05;
+
+void fragment() {
+	
+	if (int(UV.x * subdivisions) % 2 == int(UV.y * subdivisions) % 2) {
+		
+		COLOR.xyz *= colModifier;
+		
+	}
+	
+}"
