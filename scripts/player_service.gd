@@ -41,21 +41,16 @@ func get_other() -> Player:
 func get_players() -> Array:
 	return players
 
-func get_players_gradient(max_score) -> Gradient:
-	var color_range = 0.5
-	
-	var new_gradient = Gradient.new()
-	
+func get_players_percent() -> Array:
+
+	var player1_percent = 0.5
 	var total_score = (players[0].score + players[1].score) + 2
 	
 	if total_score != 0:
-		color_range = (players[0].score + 1) / float(total_score)
+		player1_percent = (players[0].score + 1) / float(total_score)
 	
-	new_gradient.colors = PoolColorArray([players[0].color, players[1].color])
-	new_gradient.offsets = PoolRealArray([0, color_range])
-	new_gradient.set_interpolation_mode(new_gradient.GRADIENT_INTERPOLATE_CONSTANT)
 	
-	return new_gradient
+	return [player1_percent, 1-player1_percent]
 	
 func reset_scores() -> void:
 	for player in players: player.score = Player.BASE_SCORE
