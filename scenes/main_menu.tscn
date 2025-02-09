@@ -301,7 +301,6 @@ custom_constants/separation = 50
 margin_right = 680.0
 margin_bottom = 61.0
 custom_fonts/font = ExtResource( 2 )
-placeholder_text = "Player 1 Name"
 
 [node name="player2" type="LineEdit" parent="PLAYMENU/Control/parameters"]
 margin_top = 111.0
@@ -309,7 +308,6 @@ margin_right = 680.0
 margin_bottom = 172.0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_fonts/font = ExtResource( 2 )
-placeholder_text = "Player 2 Name"
 
 [node name="map_select" type="RichTextLabel" parent="PLAYMENU/Control/parameters"]
 margin_top = 222.0

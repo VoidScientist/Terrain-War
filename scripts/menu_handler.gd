@@ -4,6 +4,9 @@ onready var map_selection = $PLAYMENU/Control/parameters/ItemList
 
 
 func _on_play_button_pressed():
+	$PLAYMENU/Control/parameters/player1.text = PlayerService.players[0].name
+	$PLAYMENU/Control/parameters/player2.text = PlayerService.players[1].name
+	
 	$PLAYMENU.visible = true
 	$PLAYMENU/AnimationPlayer.play_backwards("fade")
 
