@@ -5,3 +5,5 @@ bg_color = Color( 0.117647, 0.133333, 0.168627, 1 )
 border_width_top = 15
 border_width_bottom = 15
 border_color = Color( 0.364706, 0.431373, 0.529412, 1 )
+expand_margin_top = 7.0
+expand_margin_bottom = 7.0

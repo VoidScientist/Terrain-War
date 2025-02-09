@@ -88,8 +88,8 @@ direction = Vector2( 0, 1 )
 initial_velocity = 229.36
 angular_velocity = 203.17
 angle_random = 1.0
-color = Color( 0.184314, 0.611765, 0.584314, 1 )
-hue_variation = 0.13
+color = Color( 0, 0.811765, 1, 1 )
+hue_variation = 0.15
 hue_variation_random = 1.0
 
 [node name="MAINPART" type="Control" parent="."]
