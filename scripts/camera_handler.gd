@@ -7,7 +7,11 @@ func focus_on_area(area: Rect2, cell_size: Vector2) -> void:
 	var center: Vector2 = area.get_center()
 	
 	# determine the level of zoom to encompass the area
-	var visible_rect: Rect2 = get_viewport().get_visible_rect()
+	var viewport = get_viewport()
+	
+	if not viewport: return
+	
+	var visible_rect: Rect2 = viewport.get_visible_rect()
 	var x_zoom: float = (pix_size.x * cell_size.x) / visible_rect.size.x
 	var y_zoom: float = (pix_size.y * cell_size.y) / visible_rect.size.y
 	
