@@ -281,7 +281,6 @@ text = "Made by @VoidScientist"
 align = 2
 
 [node name="PLAYMENU" type="Control" parent="."]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 
@@ -308,36 +307,36 @@ custom_constants/separation = 50
 
 [node name="player1" type="LineEdit" parent="PLAYMENU/Control/parameters"]
 margin_right = 680.0
-margin_bottom = 61.0
+margin_bottom = 65.0
 custom_fonts/font = ExtResource( 2 )
 
 [node name="player2" type="LineEdit" parent="PLAYMENU/Control/parameters"]
-margin_top = 111.0
+margin_top = 115.0
 margin_right = 680.0
-margin_bottom = 172.0
+margin_bottom = 180.0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_fonts/font = ExtResource( 2 )
 
 [node name="map_select" type="RichTextLabel" parent="PLAYMENU/Control/parameters"]
-margin_top = 222.0
+margin_top = 230.0
 margin_right = 680.0
-margin_bottom = 254.0
+margin_bottom = 268.0
 custom_fonts/normal_font = ExtResource( 7 )
 text = "Map:"
 fit_content_height = true
 
 [node name="ItemList" type="ItemList" parent="PLAYMENU/Control/parameters"]
-margin_top = 304.0
+margin_top = 318.0
 margin_right = 680.0
-margin_bottom = 404.0
+margin_bottom = 418.0
 rect_min_size = Vector2( 0, 100 )
 custom_fonts/font = ExtResource( 7 )
 script = ExtResource( 6 )
 
 [node name="start_game" type="Button" parent="PLAYMENU/Control/parameters"]
-margin_top = 454.0
+margin_top = 468.0
 margin_right = 680.0
-margin_bottom = 505.0
+margin_bottom = 523.0
 focus_mode = 0
 custom_fonts/font = ExtResource( 2 )
 custom_styles/hover = SubResource( 4 )
@@ -347,9 +346,9 @@ text = "PLAY"
 flat = true
 
 [node name="back_button" type="Button" parent="PLAYMENU/Control/parameters"]
-margin_top = 555.0
+margin_top = 573.0
 margin_right = 680.0
-margin_bottom = 606.0
+margin_bottom = 628.0
 focus_mode = 0
 custom_fonts/font = ExtResource( 2 )
 custom_styles/hover = SubResource( 4 )
@@ -377,6 +376,16 @@ edit_alpha = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="PLAYMENU"]
 anims/fade = SubResource( 5 )
+
+[node name="MULTIPLAYERMENU" type="Control" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="black_shade" type="ColorRect" parent="MULTIPLAYERMENU"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.470588 )
 
 [connection signal="pressed" from="MAINPART/main_menu_margin/menu_structure/MarginContainer/HBoxContainer/button_panel/MarginContainer/buttons/play_button" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="MAINPART/main_menu_margin/menu_structure/MarginContainer/HBoxContainer/button_panel/MarginContainer/buttons/create_button" to="." method="_on_create_button_pressed"]
