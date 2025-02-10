@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=41 format=2]
 
 [ext_resource path="res://styles/button_panel_style_main_menu.tres" type="StyleBox" id=1]
 [ext_resource path="res://fonts/medium_font.tres" type="DynamicFont" id=2]
@@ -8,6 +8,13 @@
 [ext_resource path="res://scripts/map_selector.gd" type="Script" id=6]
 [ext_resource path="res://fonts/small_font.tres" type="DynamicFont" id=7]
 [ext_resource path="res://materials/grid_material.tres" type="Material" id=8]
+[ext_resource path="res://fonts/big_font.tres" type="DynamicFont" id=9]
+[ext_resource path="res://styles/map_selector_bg_style.tres" type="StyleBox" id=10]
+[ext_resource path="res://styles/color_picker_background_style.tres" type="StyleBox" id=11]
+[ext_resource path="res://styles/hovered_color_picker_background_style.tres" type="StyleBox" id=12]
+[ext_resource path="res://styles/selected_color_picker_background_style.tres" type="StyleBox" id=13]
+[ext_resource path="res://styles/selected_item_map_selector_style.tres" type="StyleBox" id=14]
+[ext_resource path="res://scripts/sliding_menu.gd" type="Script" id=15]
 
 [sub_resource type="OpenSimplexNoise" id=8]
 seed = 2
@@ -38,40 +45,50 @@ border_color = Color( 0.8, 0.8, 0.8, 0 )
 
 [sub_resource type="Theme" id=3]
 
-[sub_resource type="StyleBoxFlat" id=4]
+[sub_resource type="StyleBoxEmpty" id=12]
 
-[sub_resource type="Animation" id=5]
-resource_name = "fade"
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:modulate:a")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ 1.0, 0.0 ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath(".:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray(  ),
-"transitions": PoolRealArray(  ),
-"update": 1,
-"values": [  ]
-}
+[sub_resource type="StyleBoxEmpty" id=13]
+
+[sub_resource type="StyleBoxEmpty" id=27]
+
+[sub_resource type="StyleBoxEmpty" id=28]
+
+[sub_resource type="StyleBoxEmpty" id=31]
+
+[sub_resource type="StyleBoxEmpty" id=32]
+
+[sub_resource type="StyleBoxEmpty" id=14]
+
+[sub_resource type="StyleBoxEmpty" id=15]
+
+[sub_resource type="StyleBoxEmpty" id=20]
+
+[sub_resource type="StyleBoxEmpty" id=21]
+
+[sub_resource type="StyleBoxEmpty" id=23]
+
+[sub_resource type="StyleBoxEmpty" id=16]
+
+[sub_resource type="StyleBoxEmpty" id=17]
+
+[sub_resource type="StyleBoxEmpty" id=18]
+
+[sub_resource type="StyleBoxEmpty" id=22]
+
+[sub_resource type="StyleBoxEmpty" id=24]
+
+[sub_resource type="StyleBoxEmpty" id=19]
 
 [node name="main_menu" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 4 )
 multiplayer_path = NodePath("MAINPART/main_menu_margin/menu_structure/MarginContainer/HBoxContainer/button_panel/MarginContainer/buttons/multiplayer_button")
+map_selector_path = NodePath("PLAYMENU/play_menu_grid/vmenu_container/play_menu/map_list")
+p1_name_path = NodePath("PLAYMENU/play_menu_grid/vmenu_container/play_menu/p1_data/p1_name")
+p2_name_path = NodePath("PLAYMENU/play_menu_grid/vmenu_container/play_menu/p2_data/p2_name")
+p1_color_path = NodePath("PLAYMENU/play_menu_grid/vmenu_container/play_menu/p1_data/p1_color")
+p2_color_path = NodePath("PLAYMENU/play_menu_grid/vmenu_container/play_menu/p2_data/p2_color")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 material = SubResource( 7 )
@@ -97,6 +114,9 @@ hue_variation_random = 1.0
 [node name="MAINPART" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+script = ExtResource( 15 )
+shown_default = true
+disappear_dir = Vector2( -1, 0 )
 
 [node name="main_menu_margin" type="MarginContainer" parent="MAINPART"]
 anchor_right = 1.0
@@ -236,7 +256,7 @@ focus_mode = 0
 size_flags_vertical = 3
 theme = SubResource( 3 )
 custom_colors/font_color_hover = Color( 0.176471, 0.568627, 0.870588, 1 )
-custom_colors/font_color_pressed = Color( 0.252, 0.3506, 0.6, 1 )
+custom_colors/font_color_pressed = Color( 0.25098, 0.34902, 0.6, 1 )
 custom_fonts/font = ExtResource( 2 )
 custom_styles/hover = SubResource( 1 )
 custom_styles/normal = SubResource( 2 )
@@ -283,112 +303,208 @@ align = 2
 [node name="PLAYMENU" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = 1920.0
+margin_right = 1920.0
+script = ExtResource( 15 )
 
-[node name="black_shade" type="ColorRect" parent="PLAYMENU"]
+[node name="play_menu_grid" type="HBoxContainer" parent="PLAYMENU"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color( 0, 0, 0, 0.470588 )
 
-[node name="Control" type="Control" parent="PLAYMENU"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -340.0
-margin_top = -263.0
-margin_right = 340.0
-margin_bottom = 263.0
+[node name="empty" type="Control" parent="PLAYMENU/play_menu_grid"]
+margin_right = 478.0
+margin_bottom = 1080.0
+size_flags_horizontal = 3
 
-[node name="parameters" type="VBoxContainer" parent="PLAYMENU/Control"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-rect_min_size = Vector2( 500, 273 )
-custom_constants/separation = 50
+[node name="vmenu_container" type="MarginContainer" parent="PLAYMENU/play_menu_grid"]
+margin_left = 482.0
+margin_right = 1438.0
+margin_bottom = 1080.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+custom_constants/margin_top = 60
+custom_constants/margin_bottom = 120
 
-[node name="player1" type="LineEdit" parent="PLAYMENU/Control/parameters"]
-margin_right = 680.0
+[node name="play_menu" type="VBoxContainer" parent="PLAYMENU/play_menu_grid/vmenu_container"]
+margin_top = 60.0
+margin_right = 956.0
+margin_bottom = 960.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+
+[node name="play_menu_title" type="Label" parent="PLAYMENU/play_menu_grid/vmenu_container/play_menu"]
+margin_right = 956.0
+margin_bottom = 73.0
+custom_fonts/font = ExtResource( 9 )
+text = "Local Game"
+align = 1
+
+[node name="title_sep" type="HSeparator" parent="PLAYMENU/play_menu_grid/vmenu_container/play_menu"]
+margin_top = 77.0
+margin_right = 956.0
+margin_bottom = 165.0
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+custom_styles/separator = SubResource( 12 )
+
+[node name="p1_data" type="HBoxContainer" parent="PLAYMENU/play_menu_grid/vmenu_container/play_menu"]
+margin_top = 169.0
+margin_right = 956.0
+margin_bottom = 234.0
+rect_min_size = Vector2( 0, 60 )
+
+[node name="p1_name" type="LineEdit" parent="PLAYMENU/play_menu_grid/vmenu_container/play_menu/p1_data"]
+margin_right = 722.0
 margin_bottom = 65.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 4.0
 custom_fonts/font = ExtResource( 2 )
+placeholder_text = "Player 1 Name"
 
-[node name="player2" type="LineEdit" parent="PLAYMENU/Control/parameters"]
-margin_top = 115.0
-margin_right = 680.0
-margin_bottom = 180.0
-custom_colors/font_color = Color( 1, 1, 1, 1 )
+[node name="sep" type="VSeparator" parent="PLAYMENU/play_menu_grid/vmenu_container/play_menu/p1_data"]
+margin_left = 726.0
+margin_right = 771.0
+margin_bottom = 65.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.25
+custom_styles/separator = SubResource( 13 )
+
+[node name="p1_color" type="ColorPickerButton" parent="PLAYMENU/play_menu_grid/vmenu_container/play_menu/p1_data"]
+margin_left = 775.0
+margin_right = 956.0
+margin_bottom = 65.0
+size_flags_horizontal = 3
+custom_styles/hover = ExtResource( 12 )
+custom_styles/pressed = ExtResource( 13 )
+custom_styles/focus = SubResource( 27 )
+custom_styles/disabled = SubResource( 28 )
+custom_styles/normal = ExtResource( 11 )
+color = Color( 0.607843, 0.235294, 0.235294, 1 )
+
+[node name="data_sep" type="HSeparator" parent="PLAYMENU/play_menu_grid/vmenu_container/play_menu"]
+margin_top = 238.0
+margin_right = 956.0
+margin_bottom = 288.0
+custom_constants/separation = 50
+custom_styles/separator = SubResource( 12 )
+
+[node name="p2_data" type="HBoxContainer" parent="PLAYMENU/play_menu_grid/vmenu_container/play_menu"]
+margin_top = 292.0
+margin_right = 956.0
+margin_bottom = 357.0
+rect_min_size = Vector2( 0, 60 )
+
+[node name="p2_name" type="LineEdit" parent="PLAYMENU/play_menu_grid/vmenu_container/play_menu/p2_data"]
+margin_right = 722.0
+margin_bottom = 65.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 4.0
 custom_fonts/font = ExtResource( 2 )
+placeholder_text = "Player 2 Name"
 
-[node name="map_select" type="RichTextLabel" parent="PLAYMENU/Control/parameters"]
-margin_top = 230.0
-margin_right = 680.0
-margin_bottom = 268.0
-custom_fonts/normal_font = ExtResource( 7 )
-text = "Map:"
-fit_content_height = true
+[node name="sep" type="VSeparator" parent="PLAYMENU/play_menu_grid/vmenu_container/play_menu/p2_data"]
+margin_left = 726.0
+margin_right = 771.0
+margin_bottom = 65.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.25
+custom_styles/separator = SubResource( 13 )
 
-[node name="ItemList" type="ItemList" parent="PLAYMENU/Control/parameters"]
-margin_top = 318.0
-margin_right = 680.0
-margin_bottom = 418.0
-rect_min_size = Vector2( 0, 100 )
+[node name="p2_color" type="ColorPickerButton" parent="PLAYMENU/play_menu_grid/vmenu_container/play_menu/p2_data"]
+margin_left = 775.0
+margin_right = 956.0
+margin_bottom = 65.0
+size_flags_horizontal = 3
+custom_styles/hover = ExtResource( 12 )
+custom_styles/pressed = ExtResource( 13 )
+custom_styles/focus = SubResource( 31 )
+custom_styles/disabled = SubResource( 32 )
+custom_styles/normal = ExtResource( 11 )
+color = Color( 0.262745, 0.529412, 0.65098, 1 )
+
+[node name="map_sep" type="HSeparator" parent="PLAYMENU/play_menu_grid/vmenu_container/play_menu"]
+margin_top = 361.0
+margin_right = 956.0
+margin_bottom = 406.0
+size_flags_vertical = 3
+custom_styles/separator = SubResource( 14 )
+
+[node name="Label" type="Label" parent="PLAYMENU/play_menu_grid/vmenu_container/play_menu"]
+margin_top = 410.0
+margin_right = 956.0
+margin_bottom = 447.0
 custom_fonts/font = ExtResource( 7 )
+text = "Select a map:"
+
+[node name="map_list" type="ItemList" parent="PLAYMENU/play_menu_grid/vmenu_container/play_menu"]
+margin_top = 451.0
+margin_right = 956.0
+margin_bottom = 718.0
+rect_min_size = Vector2( 0, 250 )
+size_flags_vertical = 3
+size_flags_stretch_ratio = 6.0
+custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 7 )
+custom_styles/selected_focus = ExtResource( 14 )
+custom_styles/selected = ExtResource( 14 )
+custom_styles/bg = ExtResource( 10 )
+auto_height = true
 script = ExtResource( 6 )
 
-[node name="start_game" type="Button" parent="PLAYMENU/Control/parameters"]
-margin_top = 468.0
-margin_right = 680.0
-margin_bottom = 523.0
-focus_mode = 0
+[node name="button_sep" type="HSeparator" parent="PLAYMENU/play_menu_grid/vmenu_container/play_menu"]
+margin_top = 722.0
+margin_right = 956.0
+margin_bottom = 766.0
+size_flags_vertical = 3
+custom_styles/separator = SubResource( 15 )
+
+[node name="start_game" type="Button" parent="PLAYMENU/play_menu_grid/vmenu_container/play_menu"]
+margin_top = 770.0
+margin_right = 956.0
+margin_bottom = 825.0
+custom_colors/font_color_hover = Color( 0.176471, 0.568627, 0.870588, 1 )
+custom_colors/font_color_pressed = Color( 0.25098, 0.34902, 0.6, 1 )
 custom_fonts/font = ExtResource( 2 )
-custom_styles/hover = SubResource( 4 )
-custom_styles/normal = SubResource( 2 )
-enabled_focus_mode = 0
-text = "PLAY"
-flat = true
+custom_styles/hover = SubResource( 20 )
+custom_styles/pressed = SubResource( 21 )
+custom_styles/focus = SubResource( 23 )
+custom_styles/normal = SubResource( 16 )
+text = "Start Game"
 
-[node name="back_button" type="Button" parent="PLAYMENU/Control/parameters"]
-margin_top = 573.0
-margin_right = 680.0
-margin_bottom = 628.0
-focus_mode = 0
+[node name="HSeparator" type="HSeparator" parent="PLAYMENU/play_menu_grid/vmenu_container/play_menu"]
+margin_top = 829.0
+margin_right = 956.0
+margin_bottom = 840.0
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.25
+custom_styles/separator = SubResource( 17 )
+
+[node name="back_button" type="Button" parent="PLAYMENU/play_menu_grid/vmenu_container/play_menu"]
+margin_top = 844.0
+margin_right = 956.0
+margin_bottom = 899.0
+custom_colors/font_color_hover = Color( 0.176471, 0.568627, 0.870588, 1 )
+custom_colors/font_color_pressed = Color( 0.25098, 0.34902, 0.6, 1 )
 custom_fonts/font = ExtResource( 2 )
-custom_styles/hover = SubResource( 4 )
-custom_styles/normal = SubResource( 2 )
-enabled_focus_mode = 0
-text = "BACK"
-flat = true
+custom_styles/hover = SubResource( 18 )
+custom_styles/pressed = SubResource( 22 )
+custom_styles/focus = SubResource( 24 )
+custom_styles/normal = SubResource( 19 )
+text = "Back"
 
-[node name="player1_picker" type="ColorPickerButton" parent="PLAYMENU/Control"]
-margin_left = 732.0
-margin_right = 853.0
-margin_bottom = 65.0
-rect_pivot_offset = Vector2( 98, 33 )
-color = Color( 0.607843, 0.235294, 0.235294, 1 )
-edit_alpha = false
-
-[node name="player2_picker" type="ColorPickerButton" parent="PLAYMENU/Control"]
-margin_left = 732.0
-margin_top = 111.0
-margin_right = 853.0
-margin_bottom = 176.0
-rect_pivot_offset = Vector2( 98, 33 )
-color = Color( 0.262745, 0.529412, 0.65098, 1 )
-edit_alpha = false
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="PLAYMENU"]
-anims/fade = SubResource( 5 )
+[node name="empty2" type="Control" parent="PLAYMENU/play_menu_grid"]
+margin_left = 1442.0
+margin_right = 1920.0
+margin_bottom = 1080.0
+size_flags_horizontal = 3
 
 [node name="MULTIPLAYERMENU" type="Control" parent="."]
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="black_shade" type="ColorRect" parent="MULTIPLAYERMENU"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-color = Color( 0, 0, 0, 0.470588 )
-
 [connection signal="pressed" from="MAINPART/main_menu_margin/menu_structure/MarginContainer/HBoxContainer/button_panel/MarginContainer/buttons/play_button" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="MAINPART/main_menu_margin/menu_structure/MarginContainer/HBoxContainer/button_panel/MarginContainer/buttons/create_button" to="." method="_on_create_button_pressed"]
 [connection signal="pressed" from="MAINPART/main_menu_margin/menu_structure/MarginContainer/HBoxContainer/button_panel/MarginContainer/buttons/leave_game" to="." method="_on_leave_game_pressed"]
-[connection signal="pressed" from="PLAYMENU/Control/parameters/start_game" to="." method="_on_start_game_pressed"]
-[connection signal="pressed" from="PLAYMENU/Control/parameters/back_button" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="PLAYMENU/play_menu_grid/vmenu_container/play_menu/start_game" to="." method="_on_start_game_pressed"]
+[connection signal="pressed" from="PLAYMENU/play_menu_grid/vmenu_container/play_menu/back_button" to="." method="_on_back_button_pressed"]

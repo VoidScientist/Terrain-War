@@ -1,25 +1,28 @@
 extends Control
 
 export(NodePath) var multiplayer_path
+export(NodePath) var map_selector_path
+export(NodePath) var p1_name_path
+export(NodePath) var p2_name_path
+export(NodePath) var p1_color_path
+export(NodePath) var p2_color_path
 
-onready var map_selection = $PLAYMENU/Control/parameters/ItemList
+onready var map_selection: ItemList = get_node(map_selector_path)
 onready var multiplayer_button: Button = get_node(multiplayer_path)
+onready var p1_name: LineEdit = get_node(p1_name_path)
+onready var p2_name: LineEdit = get_node(p2_name_path)
+onready var p1_color: ColorPickerButton = get_node(p1_color_path)
+onready var p2_color: ColorPickerButton = get_node(p2_color_path)
 
 
 func _ready():
-	assert(multiplayer_button)
+	assert(multiplayer_button and map_selection and p1_name and p2_name)
+	assert(p1_color and p2_color)
 	
 	MultiplayerService.create_client()
 	
 func _process(delta):
 	multiplayer_button.visible = MultiplayerService.connected
-
-func _on_play_button_pressed():
-	$PLAYMENU/Control/parameters/player1.placeholder_text = PlayerService.players[0].name
-	$PLAYMENU/Control/parameters/player2.placeholder_text = PlayerService.players[1].name
-	
-	$PLAYMENU.visible = true
-	$PLAYMENU/AnimationPlayer.play_backwards("fade")
 
 
 func _on_leave_game_pressed():
@@ -27,10 +30,10 @@ func _on_leave_game_pressed():
 
 
 func _on_start_game_pressed():
-	var name1 = $PLAYMENU/Control/parameters/player1.text
-	var name2 = $PLAYMENU/Control/parameters/player2.text
-	var col1 = $PLAYMENU/Control/player1_picker.color
-	var col2 = $PLAYMENU/Control/player2_picker.color
+	var name1 = p1_name.text
+	var name2 = p2_name.text
+	var col1 = p1_color.color
+	var col2 = p2_color.color
 	
 	if name1:
 		PlayerService.change_name(0, name1)
@@ -57,9 +60,16 @@ func _on_start_game_pressed():
 	get_tree().root.remove_child(self)
 	
 
-func _on_back_button_pressed():
-	$PLAYMENU.visible = false
+func _on_play_button_pressed():
+	p1_name.placeholder_text = PlayerService.players[0].name
+	p2_name.placeholder_text = PlayerService.players[1].name
+	
+	$PLAYMENU.show()
+	$MAINPART.hide() 
 
+func _on_back_button_pressed():
+	$PLAYMENU.hide()
+	$MAINPART.show()
 
 func _on_create_button_pressed():
 	var scene = load("res://scenes/map_creator.tscn").instance()
