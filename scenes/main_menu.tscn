@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://styles/button_panel_style_main_menu.tres" type="StyleBox" id=1]
 [ext_resource path="res://fonts/medium_font.tres" type="DynamicFont" id=2]
@@ -15,6 +15,9 @@
 [ext_resource path="res://styles/selected_color_picker_background_style.tres" type="StyleBox" id=13]
 [ext_resource path="res://styles/selected_item_map_selector_style.tres" type="StyleBox" id=14]
 [ext_resource path="res://scripts/sliding_menu.gd" type="Script" id=15]
+[ext_resource path="res://themes/menu_theme.tres" type="Theme" id=16]
+[ext_resource path="res://styles/normal_main_part_button_style.tres" type="StyleBox" id=17]
+[ext_resource path="res://styles/hover_main_part_button_style.tres" type="StyleBox" id=18]
 
 [sub_resource type="OpenSimplexNoise" id=8]
 seed = 2
@@ -37,14 +40,6 @@ load_path = "res://.import/player tile.png-e47d55aa508f7400973e367c20a668aa.stex
 
 [sub_resource type="StyleBoxEmpty" id=11]
 
-[sub_resource type="StyleBoxFlat" id=1]
-content_margin_left = 10.0
-border_color = Color( 0.8, 0.8, 0.8, 0 )
-
-[sub_resource type="StyleBoxFlat" id=2]
-
-[sub_resource type="Theme" id=3]
-
 [sub_resource type="StyleBoxEmpty" id=12]
 
 [sub_resource type="StyleBoxEmpty" id=13]
@@ -61,23 +56,7 @@ border_color = Color( 0.8, 0.8, 0.8, 0 )
 
 [sub_resource type="StyleBoxEmpty" id=15]
 
-[sub_resource type="StyleBoxEmpty" id=20]
-
-[sub_resource type="StyleBoxEmpty" id=21]
-
-[sub_resource type="StyleBoxEmpty" id=23]
-
-[sub_resource type="StyleBoxEmpty" id=16]
-
 [sub_resource type="StyleBoxEmpty" id=17]
-
-[sub_resource type="StyleBoxEmpty" id=18]
-
-[sub_resource type="StyleBoxEmpty" id=22]
-
-[sub_resource type="StyleBoxEmpty" id=24]
-
-[sub_resource type="StyleBoxEmpty" id=19]
 
 [node name="main_menu" type="Control"]
 anchor_right = 1.0
@@ -201,11 +180,12 @@ margin_bottom = 98.0
 rect_min_size = Vector2( 0, 70 )
 focus_mode = 0
 size_flags_vertical = 3
+theme = ExtResource( 16 )
 custom_colors/font_color_hover = Color( 0.176471, 0.568627, 0.870588, 1 )
 custom_colors/font_color_pressed = Color( 0.252, 0.3506, 0.6, 1 )
 custom_fonts/font = ExtResource( 2 )
-custom_styles/hover = SubResource( 1 )
-custom_styles/normal = SubResource( 2 )
+custom_styles/hover = ExtResource( 18 )
+custom_styles/normal = ExtResource( 17 )
 enabled_focus_mode = 0
 text = "LOCAL GAME"
 flat = true
@@ -219,11 +199,9 @@ margin_bottom = 200.0
 rect_min_size = Vector2( 0, 70 )
 focus_mode = 0
 size_flags_vertical = 3
-custom_colors/font_color_hover = Color( 0.176471, 0.568627, 0.870588, 1 )
-custom_colors/font_color_pressed = Color( 0.252, 0.3506, 0.6, 1 )
-custom_fonts/font = ExtResource( 2 )
-custom_styles/hover = SubResource( 1 )
-custom_styles/normal = SubResource( 2 )
+theme = ExtResource( 16 )
+custom_styles/hover = ExtResource( 18 )
+custom_styles/normal = ExtResource( 17 )
 enabled_focus_mode = 0
 text = "MULTIPLAYER"
 flat = true
@@ -237,11 +215,9 @@ margin_bottom = 302.0
 rect_min_size = Vector2( 0, 70 )
 focus_mode = 0
 size_flags_vertical = 3
-custom_colors/font_color_hover = Color( 0.176471, 0.568627, 0.870588, 1 )
-custom_colors/font_color_pressed = Color( 0.252, 0.3506, 0.6, 1 )
-custom_fonts/font = ExtResource( 2 )
-custom_styles/hover = SubResource( 1 )
-custom_styles/normal = SubResource( 2 )
+theme = ExtResource( 16 )
+custom_styles/hover = ExtResource( 18 )
+custom_styles/normal = ExtResource( 17 )
 enabled_focus_mode = 0
 text = "CREATE MAP"
 flat = true
@@ -254,12 +230,9 @@ margin_bottom = 405.0
 rect_min_size = Vector2( 0, 70 )
 focus_mode = 0
 size_flags_vertical = 3
-theme = SubResource( 3 )
-custom_colors/font_color_hover = Color( 0.176471, 0.568627, 0.870588, 1 )
-custom_colors/font_color_pressed = Color( 0.25098, 0.34902, 0.6, 1 )
-custom_fonts/font = ExtResource( 2 )
-custom_styles/hover = SubResource( 1 )
-custom_styles/normal = SubResource( 2 )
+theme = ExtResource( 16 )
+custom_styles/hover = ExtResource( 18 )
+custom_styles/normal = ExtResource( 17 )
 enabled_focus_mode = 0
 text = "LEAVE"
 flat = true
@@ -462,13 +435,7 @@ custom_styles/separator = SubResource( 15 )
 margin_top = 770.0
 margin_right = 956.0
 margin_bottom = 825.0
-custom_colors/font_color_hover = Color( 0.176471, 0.568627, 0.870588, 1 )
-custom_colors/font_color_pressed = Color( 0.25098, 0.34902, 0.6, 1 )
-custom_fonts/font = ExtResource( 2 )
-custom_styles/hover = SubResource( 20 )
-custom_styles/pressed = SubResource( 21 )
-custom_styles/focus = SubResource( 23 )
-custom_styles/normal = SubResource( 16 )
+theme = ExtResource( 16 )
 text = "Start Game"
 
 [node name="HSeparator" type="HSeparator" parent="PLAYMENU/play_menu_grid/vmenu_container/play_menu"]
@@ -483,13 +450,7 @@ custom_styles/separator = SubResource( 17 )
 margin_top = 844.0
 margin_right = 956.0
 margin_bottom = 899.0
-custom_colors/font_color_hover = Color( 0.176471, 0.568627, 0.870588, 1 )
-custom_colors/font_color_pressed = Color( 0.25098, 0.34902, 0.6, 1 )
-custom_fonts/font = ExtResource( 2 )
-custom_styles/hover = SubResource( 18 )
-custom_styles/pressed = SubResource( 22 )
-custom_styles/focus = SubResource( 24 )
-custom_styles/normal = SubResource( 19 )
+theme = ExtResource( 16 )
 text = "Back"
 
 [node name="empty2" type="Control" parent="PLAYMENU/play_menu_grid"]

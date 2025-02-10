@@ -20,11 +20,11 @@ func show():
 	tween.tween_property(self, "rect_position", Vector2(0,0), show_time)
 
 func hide():
-	var screen_width = get_viewport_rect().size.x
+	var screen_width = get_viewport_rect().size
 	
 	var tween = get_tree().create_tween()
 	
-	tween.tween_property(self, "rect_position", Vector2(screen_width, 0) * disappear_dir, show_time)
+	tween.tween_property(self, "rect_position", screen_width * disappear_dir, show_time)
 	
 	tween.connect("finished", self, "set_invisible")
 	
