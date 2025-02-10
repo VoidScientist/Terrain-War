@@ -71,6 +71,7 @@ tracks/1/keys = {
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 4 )
+multiplayer_path = NodePath("MAINPART/main_menu_margin/menu_structure/MarginContainer/HBoxContainer/button_panel/MarginContainer/buttons/multiplayer_button")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 material = SubResource( 7 )
@@ -111,25 +112,31 @@ margin_bottom = 1050.0
 
 [node name="centered_logo" type="CenterContainer" parent="MAINPART/main_menu_margin/menu_structure"]
 margin_right = 1890.0
-margin_bottom = 212.0
+margin_bottom = 298.0
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.5
 
 [node name="name_logo" type="TextureRect" parent="MAINPART/main_menu_margin/menu_structure/centered_logo"]
-margin_left = 663.0
-margin_right = 1227.0
-margin_bottom = 212.0
+margin_left = 945.0
+margin_top = 149.0
+margin_right = 945.0
+margin_bottom = 149.0
 texture = ExtResource( 3 )
+expand = true
+stretch_mode = 4
 
 [node name="sep1" type="HSeparator" parent="MAINPART/main_menu_margin/menu_structure"]
-margin_top = 216.0
+margin_top = 302.0
 margin_right = 1890.0
-margin_bottom = 408.0
+margin_bottom = 402.0
 size_flags_vertical = 3
+size_flags_stretch_ratio = 0.5
 custom_styles/separator = SubResource( 11 )
 
 [node name="MarginContainer" type="MarginContainer" parent="MAINPART/main_menu_margin/menu_structure"]
-margin_top = 412.0
+margin_top = 406.0
 margin_right = 1890.0
-margin_bottom = 812.0
+margin_bottom = 806.0
 custom_constants/margin_right = -10
 custom_constants/margin_left = 10
 
@@ -246,7 +253,7 @@ size_flags_horizontal = 3
 size_flags_stretch_ratio = 6.0
 
 [node name="sep2" type="HSeparator" parent="MAINPART/main_menu_margin/menu_structure"]
-margin_top = 816.0
+margin_top = 810.0
 margin_right = 1890.0
 margin_bottom = 1009.0
 size_flags_vertical = 3

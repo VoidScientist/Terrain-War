@@ -1,6 +1,15 @@
 extends Control
 
+export(NodePath) var multiplayer_path
+
 onready var map_selection = $PLAYMENU/Control/parameters/ItemList
+onready var multiplayer_button: Button = get_node(multiplayer_path)
+
+
+func _ready():
+	assert(multiplayer_button)
+	
+	multiplayer_button.visible = MultiplayerService.create_client()
 
 func _on_play_button_pressed():
 	$PLAYMENU/Control/parameters/player1.placeholder_text = PlayerService.players[0].name
