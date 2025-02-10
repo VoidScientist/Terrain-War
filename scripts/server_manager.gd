@@ -1,6 +1,7 @@
 extends Node
 class_name ServerManager
 
+var connected: bool = false
 var peer: NetworkedMultiplayerENet
 
 func create_client():
@@ -10,11 +11,11 @@ func create_client():
 	if err != OK: 
 		print("Couldn't connect to server. Multiplayer disabled.")
 		return false
+		
+	get_tree().network_peer = peer
 	
 	peer.connect("connection_succeeded", self, "on_connection_succeeded")
 	peer.connect("connection_failed", self, "_on_connection_failed")
-	
-	get_tree().network_peer = peer
 	
 	return true
 	
@@ -22,4 +23,5 @@ func _on_connection_failed():
 	print("failed to connect to server")
 	
 func _on_connection_succeeded():
+	connected = true
 	print("connected to server")

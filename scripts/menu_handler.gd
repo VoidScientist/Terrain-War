@@ -9,7 +9,8 @@ onready var multiplayer_button: Button = get_node(multiplayer_path)
 func _ready():
 	assert(multiplayer_button)
 	
-	multiplayer_button.visible = MultiplayerService.create_client()
+	MultiplayerService.create_client()
+	multiplayer_button.visible = MultiplayerService.connected
 
 func _on_play_button_pressed():
 	$PLAYMENU/Control/parameters/player1.placeholder_text = PlayerService.players[0].name
