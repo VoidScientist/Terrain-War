@@ -10,6 +10,8 @@ func _ready():
 	assert(multiplayer_button)
 	
 	MultiplayerService.create_client()
+	
+func _process(delta):
 	multiplayer_button.visible = MultiplayerService.connected
 
 func _on_play_button_pressed():
