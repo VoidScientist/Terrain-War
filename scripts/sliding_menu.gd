@@ -16,13 +16,14 @@ func _ready():
 		rect_position = Vector2.ZERO
 	
 
-func show():
-	visible = true
+func show_menu():
+	show()
 	
 	var tween = get_tree().create_tween().set_ease(Tween.EASE_OUT)
 	tween.tween_property(self, "rect_position", Vector2(0,0), SHOW_TIME)
 
-func hide():
+func hide_menu():
+	
 	var screen_size = get_viewport_rect().size
 	
 	var tween = get_tree().create_tween().set_ease(Tween.EASE_IN)
@@ -31,4 +32,4 @@ func hide():
 	tween.connect("finished", self, "set_invisible")
 	
 func set_invisible():
-	visible = false
+	hide()

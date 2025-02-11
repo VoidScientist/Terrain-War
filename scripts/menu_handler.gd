@@ -30,19 +30,19 @@ func _on_play_button_pressed():
 	p1_name.placeholder_text = PlayerService.players[0].name
 	p2_name.placeholder_text = PlayerService.players[1].name
 
-	$PLAYMENU.show()
-	$MAINPART.hide()
+	$PLAYMENU.show_menu()
+	$MAINPART.hide_menu()
 
 
 func _on_back_button_pressed():
-	$PLAYMENU.hide()
-	$MAINPART.show()
+	$PLAYMENU.hide_menu()
+	$MAINPART.show_menu()
 
 
 func _on_multiplayer_button_pressed():
 	
-	$MAINPART.hide()
-	$MULTIPLAYERMENU.show()
+	$MAINPART.hide_menu()
+	$MULTIPLAYERMENU.show_menu()
 
 
 func _on_create_button_pressed():
@@ -88,5 +88,5 @@ func _on_start_game_pressed():
 
 
 func _on_multiplayer_back_button_pressed():
-	$MULTIPLAYERMENU.hide()
-	$MAINPART.show()
+	$MULTIPLAYERMENU.hide_menu()
+	$MAINPART.show_menu()
