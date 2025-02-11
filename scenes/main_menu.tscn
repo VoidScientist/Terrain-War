@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=2]
+[gd_scene load_steps=37 format=2]
 
 [ext_resource path="res://styles/button_panel_style_main_menu.tres" type="StyleBox" id=1]
 [ext_resource path="res://fonts/medium_font.tres" type="DynamicFont" id=2]
@@ -18,6 +18,8 @@
 [ext_resource path="res://themes/menu_theme.tres" type="Theme" id=16]
 [ext_resource path="res://styles/normal_main_part_button_style.tres" type="StyleBox" id=17]
 [ext_resource path="res://styles/hover_main_part_button_style.tres" type="StyleBox" id=18]
+[ext_resource path="res://scripts/server_interaction_menu_component.gd" type="Script" id=19]
+[ext_resource path="res://scripts/lobbies_list_handler.gd" type="Script" id=20]
 
 [sub_resource type="OpenSimplexNoise" id=8]
 seed = 2
@@ -58,6 +60,10 @@ load_path = "res://.import/player tile.png-e47d55aa508f7400973e367c20a668aa.stex
 
 [sub_resource type="StyleBoxEmpty" id=17]
 
+[sub_resource type="StyleBoxEmpty" id=33]
+
+[sub_resource type="StyleBoxEmpty" id=34]
+
 [node name="main_menu" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -91,6 +97,7 @@ hue_variation = 0.15
 hue_variation_random = 1.0
 
 [node name="MAINPART" type="Control" parent="."]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 15 )
@@ -416,6 +423,7 @@ margin_bottom = 718.0
 rect_min_size = Vector2( 0, 250 )
 size_flags_vertical = 3
 size_flags_stretch_ratio = 6.0
+custom_colors/guide_color = Color( 0, 0, 0, 0 )
 custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 7 )
 custom_styles/selected_focus = ExtResource( 14 )
@@ -460,12 +468,188 @@ margin_bottom = 1080.0
 size_flags_horizontal = 3
 
 [node name="MULTIPLAYERMENU" type="Control" parent="."]
-visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 15 )
+
+[node name="ServerInteractionComp" type="Node2D" parent="MULTIPLAYERMENU"]
+script = ExtResource( 19 )
+color_picker_path = NodePath("../multiplayer_container/multiplayer_margin/multiplayer_menu/username_choice_container/color")
+
+[node name="multiplayer_container" type="HBoxContainer" parent="MULTIPLAYERMENU"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 
+[node name="empty" type="Control" parent="MULTIPLAYERMENU/multiplayer_container"]
+margin_right = 382.0
+margin_bottom = 1080.0
+size_flags_horizontal = 3
+
+[node name="multiplayer_margin" type="MarginContainer" parent="MULTIPLAYERMENU/multiplayer_container"]
+margin_left = 386.0
+margin_right = 1533.0
+margin_bottom = 1080.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+custom_constants/margin_top = 50
+custom_constants/margin_bottom = 50
+
+[node name="multiplayer_menu" type="VBoxContainer" parent="MULTIPLAYERMENU/multiplayer_container/multiplayer_margin"]
+margin_top = 50.0
+margin_right = 1147.0
+margin_bottom = 1030.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+
+[node name="multiplayer_title" type="Label" parent="MULTIPLAYERMENU/multiplayer_container/multiplayer_margin/multiplayer_menu"]
+margin_right = 1147.0
+margin_bottom = 55.0
+custom_fonts/font = ExtResource( 2 )
+text = "Active Lobbies"
+align = 1
+
+[node name="sep1" type="HSeparator" parent="MULTIPLAYERMENU/multiplayer_container/multiplayer_margin/multiplayer_menu"]
+margin_top = 59.0
+margin_right = 1147.0
+margin_bottom = 134.0
+size_flags_vertical = 3
+custom_styles/separator = SubResource( 33 )
+
+[node name="username_choice_container" type="HBoxContainer" parent="MULTIPLAYERMENU/multiplayer_container/multiplayer_margin/multiplayer_menu"]
+margin_top = 138.0
+margin_right = 1147.0
+margin_bottom = 203.0
+custom_constants/separation = 10
+
+[node name="username_title" type="Label" parent="MULTIPLAYERMENU/multiplayer_container/multiplayer_margin/multiplayer_menu/username_choice_container"]
+margin_top = 5.0
+margin_right = 212.0
+margin_bottom = 60.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 2 )
+text = "Profile :"
+
+[node name="username_entry" type="LineEdit" parent="MULTIPLAYERMENU/multiplayer_container/multiplayer_margin/multiplayer_menu/username_choice_container"]
+margin_left = 222.0
+margin_right = 861.0
+margin_bottom = 65.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+custom_fonts/font = ExtResource( 2 )
+max_length = 12
+
+[node name="sep6" type="VSeparator" parent="MULTIPLAYERMENU/multiplayer_container/multiplayer_margin/multiplayer_menu/username_choice_container"]
+margin_left = 871.0
+margin_right = 924.0
+margin_bottom = 65.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.25
+custom_styles/separator = SubResource( 34 )
+
+[node name="color" type="ColorPickerButton" parent="MULTIPLAYERMENU/multiplayer_container/multiplayer_margin/multiplayer_menu/username_choice_container"]
+margin_left = 934.0
+margin_right = 1147.0
+margin_bottom = 65.0
+size_flags_horizontal = 3
+custom_styles/hover = ExtResource( 12 )
+custom_styles/pressed = ExtResource( 13 )
+custom_styles/normal = ExtResource( 11 )
+color = Color( 0.2, 0.545098, 0.694118, 1 )
+edit_alpha = false
+
+[node name="sep4" type="HSeparator" parent="MULTIPLAYERMENU/multiplayer_container/multiplayer_margin/multiplayer_menu"]
+margin_top = 207.0
+margin_right = 1147.0
+margin_bottom = 244.0
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.5
+custom_styles/separator = SubResource( 34 )
+
+[node name="lobbies_list" type="ItemList" parent="MULTIPLAYERMENU/multiplayer_container/multiplayer_margin/multiplayer_menu"]
+margin_top = 248.0
+margin_right = 1147.0
+margin_bottom = 699.0
+size_flags_vertical = 3
+size_flags_stretch_ratio = 6.0
+custom_colors/guide_color = Color( 0, 0, 0, 0 )
+custom_fonts/font = ExtResource( 7 )
+custom_styles/selected_focus = ExtResource( 14 )
+custom_styles/selected = ExtResource( 14 )
+custom_styles/bg = ExtResource( 10 )
+script = ExtResource( 20 )
+
+[node name="sep3" type="HSeparator" parent="MULTIPLAYERMENU/multiplayer_container/multiplayer_margin/multiplayer_menu"]
+margin_top = 703.0
+margin_right = 1147.0
+margin_bottom = 741.0
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.5
+custom_styles/separator = SubResource( 34 )
+
+[node name="button_bar" type="HBoxContainer" parent="MULTIPLAYERMENU/multiplayer_container/multiplayer_margin/multiplayer_menu"]
+margin_top = 745.0
+margin_right = 1147.0
+margin_bottom = 800.0
+
+[node name="join_lobby" type="Button" parent="MULTIPLAYERMENU/multiplayer_container/multiplayer_margin/multiplayer_menu/button_bar"]
+margin_right = 379.0
+margin_bottom = 55.0
+size_flags_horizontal = 3
+theme = ExtResource( 16 )
+text = "Join"
+
+[node name="create_lobby" type="Button" parent="MULTIPLAYERMENU/multiplayer_container/multiplayer_margin/multiplayer_menu/button_bar"]
+margin_left = 383.0
+margin_right = 763.0
+margin_bottom = 55.0
+size_flags_horizontal = 3
+theme = ExtResource( 16 )
+text = "Create"
+
+[node name="refresh" type="Button" parent="MULTIPLAYERMENU/multiplayer_container/multiplayer_margin/multiplayer_menu/button_bar"]
+margin_left = 767.0
+margin_right = 1147.0
+margin_bottom = 55.0
+size_flags_horizontal = 3
+theme = ExtResource( 16 )
+text = "Refresh"
+
+[node name="sep5" type="HSeparator" parent="MULTIPLAYERMENU/multiplayer_container/multiplayer_margin/multiplayer_menu"]
+margin_top = 804.0
+margin_right = 1147.0
+margin_bottom = 841.0
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.5
+custom_styles/separator = SubResource( 34 )
+
+[node name="multiplayer_back_button" type="Button" parent="MULTIPLAYERMENU/multiplayer_container/multiplayer_margin/multiplayer_menu"]
+margin_top = 845.0
+margin_right = 1147.0
+margin_bottom = 900.0
+theme = ExtResource( 16 )
+text = "Back"
+
+[node name="sep2" type="HSeparator" parent="MULTIPLAYERMENU/multiplayer_container/multiplayer_margin/multiplayer_menu"]
+margin_top = 904.0
+margin_right = 1147.0
+margin_bottom = 980.0
+size_flags_vertical = 3
+custom_styles/separator = SubResource( 34 )
+
+[node name="empty2" type="Control" parent="MULTIPLAYERMENU/multiplayer_container"]
+margin_left = 1537.0
+margin_right = 1920.0
+margin_bottom = 1080.0
+size_flags_horizontal = 3
+
 [connection signal="pressed" from="MAINPART/main_menu_margin/menu_structure/MarginContainer/HBoxContainer/button_panel/MarginContainer/buttons/play_button" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="MAINPART/main_menu_margin/menu_structure/MarginContainer/HBoxContainer/button_panel/MarginContainer/buttons/multiplayer_button" to="." method="_on_multiplayer_button_pressed"]
 [connection signal="pressed" from="MAINPART/main_menu_margin/menu_structure/MarginContainer/HBoxContainer/button_panel/MarginContainer/buttons/create_button" to="." method="_on_create_button_pressed"]
 [connection signal="pressed" from="MAINPART/main_menu_margin/menu_structure/MarginContainer/HBoxContainer/button_panel/MarginContainer/buttons/leave_game" to="." method="_on_leave_game_pressed"]
 [connection signal="pressed" from="PLAYMENU/play_menu_grid/vmenu_container/play_menu/start_game" to="." method="_on_start_game_pressed"]
 [connection signal="pressed" from="PLAYMENU/play_menu_grid/vmenu_container/play_menu/back_button" to="." method="_on_back_button_pressed"]
+[connection signal="text_entered" from="MULTIPLAYERMENU/multiplayer_container/multiplayer_margin/multiplayer_menu/username_choice_container/username_entry" to="MULTIPLAYERMENU/ServerInteractionComp" method="_on_username_entry_text_entered"]
+[connection signal="popup_closed" from="MULTIPLAYERMENU/multiplayer_container/multiplayer_margin/multiplayer_menu/username_choice_container/color" to="MULTIPLAYERMENU/ServerInteractionComp" method="_on_color_popup_closed"]
+[connection signal="pressed" from="MULTIPLAYERMENU/multiplayer_container/multiplayer_margin/multiplayer_menu/button_bar/create_lobby" to="MULTIPLAYERMENU/ServerInteractionComp" method="_on_create_lobby_pressed"]
+[connection signal="pressed" from="MULTIPLAYERMENU/multiplayer_container/multiplayer_margin/multiplayer_menu/button_bar/refresh" to="MULTIPLAYERMENU/ServerInteractionComp" method="_on_refresh_pressed"]
+[connection signal="pressed" from="MULTIPLAYERMENU/multiplayer_container/multiplayer_margin/multiplayer_menu/multiplayer_back_button" to="." method="_on_multiplayer_back_button_pressed"]

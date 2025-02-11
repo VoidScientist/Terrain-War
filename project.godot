@@ -34,6 +34,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/loadable_map.gd"
 }, {
+"base": "ItemList",
+"class": "LobbiesList",
+"language": "GDScript",
+"path": "res://scripts/lobbies_list_handler.gd"
+}, {
 "base": "LoadableMap",
 "class": "PlayableMap",
 "language": "GDScript",
@@ -47,7 +52,12 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "ServerManager",
 "language": "GDScript",
-"path": "res://scripts/server_manager.gd"
+"path": "res://scripts/multiplayer_service.gd"
+}, {
+"base": "Node2D",
+"class": "ServerMenuInteractionComponent",
+"language": "GDScript",
+"path": "res://scripts/server_interaction_menu_component.gd"
 }, {
 "base": "Control",
 "class": "SlidingMenu",
@@ -60,9 +70,11 @@ _global_script_class_icons={
 "FloodFill": "",
 "FocusingCamera": "",
 "LoadableMap": "",
+"LobbiesList": "",
 "PlayableMap": "",
 "Player": "",
 "ServerManager": "",
+"ServerMenuInteractionComponent": "",
 "SlidingMenu": ""
 }
 
@@ -75,7 +87,11 @@ config/icon="res://import/player tile.png"
 [autoload]
 
 PlayerService="*res://scripts/player_service.gd"
-MultiplayerService="*res://scripts/server_manager.gd"
+MultiplayerService="*res://scripts/multiplayer_service.gd"
+
+[debug]
+
+settings/stdout/print_fps=true
 
 [display]
 
@@ -139,3 +155,4 @@ common/enable_pause_aware_picking=true
 
 environment/default_clear_color=Color( 0.266667, 0.6, 0.764706, 1 )
 environment/default_environment="res://default_env.tres"
+limits/vsync/use_vsync=true

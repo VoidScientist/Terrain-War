@@ -1,6 +1,8 @@
 extends Node
 class_name ServerManager
 
+signal lobbies_received(descs)
+
 var connected: bool = false
 var peer: NetworkedMultiplayerENet
 
@@ -31,3 +33,18 @@ func _on_connection_succeeded():
 func _on_server_disconnected():
 	connected = false
 	print("lost connection with server")
+
+func change_username(new_username):
+	rpc_id(1, "update_username", new_username)
+
+func change_color(new_color):
+	rpc_id(1, "update_color", new_color)
+
+func create_lobby():
+	rpc_id(1, "create_lobby", "New Lobby", false, "")
+
+func request_lobbies():
+	rpc_id(1, "retrieve_lobbies")
+	
+remote func update_lobbies(descs):
+	emit_signal("lobbies_received", descs)
