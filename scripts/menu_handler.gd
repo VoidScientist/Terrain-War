@@ -22,7 +22,11 @@ func _ready():
 	MultiplayerService.create_client()
 
 
-func _process(delta):
+func _physics_process(delta):
+	if Input.is_action_just_pressed("DEBUG_TRIGGER_SERVER_RECONNECT"):
+		MultiplayerService.create_client()
+
+func _process(_delta):
 	multiplayer_button.visible = MultiplayerService.connected
 
 
@@ -43,6 +47,8 @@ func _on_multiplayer_button_pressed():
 	
 	$MAINPART.hide_menu()
 	$MULTIPLAYERMENU.show_menu()
+	
+	MultiplayerService.request_lobbies()
 
 
 func _on_create_button_pressed():

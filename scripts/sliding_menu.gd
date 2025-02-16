@@ -8,7 +8,10 @@ const SHOW_TIME: float = 0.5
 
 func _ready():
 
-	visible = shown_default
+	if not shown_default:
+		set_invisible()
+	else:
+		show()
 	
 	if not shown_default:
 		rect_position = get_viewport_rect().size.x * disappear_dir 

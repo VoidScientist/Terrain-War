@@ -16,6 +16,7 @@ func _ready():
 
 func _on_username_entry_text_entered(new_text):
 	MultiplayerService.change_username(new_text)
+	MultiplayerService.request_lobbies()
 	
 
 func _on_color_popup_closed():
@@ -27,6 +28,7 @@ func _on_color_popup_closed():
 
 func _on_create_lobby_pressed():
 	MultiplayerService.create_lobby()
+	MultiplayerService.request_lobbies()
 
 func _on_refresh_pressed():
 	MultiplayerService.request_lobbies()
