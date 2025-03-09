@@ -97,7 +97,6 @@ hue_variation = 0.15
 hue_variation_random = 1.0
 
 [node name="MAINPART" type="Control" parent="."]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 15 )
@@ -281,7 +280,6 @@ text = "Made by @VoidScientist"
 align = 2
 
 [node name="PLAYMENU" type="Control" parent="."]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 1920.0
@@ -642,6 +640,35 @@ margin_left = 1537.0
 margin_right = 1920.0
 margin_bottom = 1080.0
 size_flags_horizontal = 3
+
+[node name="LOBBYMENU" type="Control" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="container" type="HBoxContainer" parent="LOBBYMENU"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="p1_info" type="VBoxContainer" parent="LOBBYMENU/container"]
+margin_right = 637.0
+margin_bottom = 1080.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="buttons" type="VBoxContainer" parent="LOBBYMENU/container"]
+margin_left = 641.0
+margin_right = 1278.0
+margin_bottom = 1080.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="p2_info" type="VBoxContainer" parent="LOBBYMENU/container"]
+margin_left = 1282.0
+margin_right = 1920.0
+margin_bottom = 1080.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [connection signal="pressed" from="MAINPART/main_menu_margin/menu_structure/MarginContainer/HBoxContainer/button_panel/MarginContainer/buttons/play_button" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="MAINPART/main_menu_margin/menu_structure/MarginContainer/HBoxContainer/button_panel/MarginContainer/buttons/multiplayer_button" to="." method="_on_multiplayer_button_pressed"]
